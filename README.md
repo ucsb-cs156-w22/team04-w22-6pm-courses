@@ -1,4 +1,7 @@
-# STARTER-team04-courses
+# team04-w22-6pm-courses
+
+[![codecov](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-6pm-courses/branch/main/graph/badge.svg?token=SmRwZrdYnM)](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-6pm-courses)
+
 
 Storybook is here:
 * Production: <https://ucsb-cs156-w22.github.io/team04-w22-6pm-courses-docs/>
