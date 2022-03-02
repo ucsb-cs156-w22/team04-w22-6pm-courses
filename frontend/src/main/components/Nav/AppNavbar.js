@@ -46,6 +46,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 hasRole(currentUser, "ROLE_ADMIN") && (
                   <NavDropdown title="Admin" id="appnavbar-admin-dropdown" data-testid="appnavbar-admin-dropdown" >
                     <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
+                    <NavDropdown.Item href="/admin/loadSubjects">LoadSubjects</NavDropdown.Item>
                   </NavDropdown>
                 )
               }
@@ -63,6 +64,12 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
+
+              
+
+
+
+
           </Navbar.Collapse>
         </Container >
       </Navbar >

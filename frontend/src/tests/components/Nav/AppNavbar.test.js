@@ -44,6 +44,24 @@ describe("AppNavbar tests", () => {
         expect(adminMenu).toBeInTheDocument();        
     });
 
+    test("renders correctly empty for admin loadSubject", async () => {
+
+        //const currentUser = currentUserFixtures.adminUser;
+        const doLogin = jest.fn();
+
+        const { getByText , getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+               
+    });
+
+   
+
     test("renders H2Console and Swagger links correctly", async () => {
 
         const currentUser = currentUserFixtures.adminUser;
