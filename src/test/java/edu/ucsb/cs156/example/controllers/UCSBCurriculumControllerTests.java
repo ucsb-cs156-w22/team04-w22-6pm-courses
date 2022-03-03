@@ -67,7 +67,6 @@ public class UCSBCurriculumControllerTests extends ControllerTestCase {
         csp.enrollCode = "test";
         csp.session = "test";
         csp.deptCode = "";
-        csp.objLevelCode = "test";
         csp.title = "test";
         csp.areas = "test";
         csp.objLevelCode = "A"; 
@@ -86,6 +85,44 @@ public class UCSBCurriculumControllerTests extends ControllerTestCase {
 
         assertEquals(csp.generateParams(), "?quarter=test&courseId=test&enrollCode=test&session=test&deptCode=&objLevelCode=A&title=test&areas=test&openSections=true&nonRestriction=true&nonPreReq=true&minUnits=2.000000&maxUnits=2.000000&minStartTime=1&maxStartTime=1&days=&instructor=&pageNumber=1&pageSize=100&includeClassSections=true");
 
+        // act
+        MvcResult response = mockMvc.perform(get("/api/ucsbcourses/search" + csp.generateParams()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedResult, responseString);
+    }
+
+    @Test
+    public void api_search_test_2_just_for_codecov() throws Exception {
+
+        String expectedResult = "{expectedResult}";
+
+        when(ucsbCurriculumService.courseSearchAdvanced(any())).thenReturn(expectedResult);
+
+        CourseSearchParams csp = new CourseSearchParams("20222");
+
+        csp.quarter = "test";
+        csp.courseId = "test";
+        csp.enrollCode = "test";
+        csp.session = "test";
+        csp.deptCode = "";
+        csp.title = "test";
+        csp.areas = "test";
+        csp.openSections = true;
+        csp.nonRestriction = true;
+        csp.nonPreReq = true;
+        csp.minUnits = 2.0;
+        csp.maxUnits = 2.0;
+        csp.minStartTime = 1;
+        csp.maxStartTime = 1;
+        csp.days = "";
+        csp.instructor = "";
+        csp.pageNumber = 1;
+        csp.pageSize = 100;
+        csp.includeClassSections = true;
+        
         // act
         MvcResult response = mockMvc.perform(get("/api/ucsbcourses/search" + csp.generateParams()))
                 .andExpect(status().isOk()).andReturn();
