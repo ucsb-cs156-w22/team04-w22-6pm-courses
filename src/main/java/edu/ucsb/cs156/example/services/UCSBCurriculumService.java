@@ -55,29 +55,4 @@ public class UCSBCurriculumService  {
         }
         return retVal;
     }
-
-    public String getSubjectsJSON() {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("ucsb-api-version", "1.0");
-        headers.set("ucsb-api-key", this.apiKey);
-
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-
-        String url = "https://api.ucsb.edu/students/lookups/v1/subjects";
-        logger.info("url=" + url);
-
-        String retVal = "";
-        try {
-            ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            retVal = re.getBody();
-        } catch (HttpClientErrorException e) {
-            logger.info(e.toString());
-            retVal = "{\"error\": \"401: Unauthorized\"}";
-        }
-        return retVal;
-    }
-    
 }

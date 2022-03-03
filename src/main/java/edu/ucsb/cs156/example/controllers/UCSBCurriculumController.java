@@ -75,11 +75,6 @@ public class UCSBCurriculumController extends ApiController {
         log.info(csp.generateParams());
 
         return ResponseEntity.ok().body(ucsbCurriculumService.courseSearchAdvanced(csp));
-    }
-
-    @GetMapping(value = "/subjects", produces = "application/json")
-    public ResponseEntity<String> getSubjects() {
-        return ResponseEntity.ok().body(ucsbCurriculumService.getSubjectsJSON());
-    }  
+    } 
 
 }

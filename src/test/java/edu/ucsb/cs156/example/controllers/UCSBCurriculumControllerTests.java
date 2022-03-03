@@ -131,18 +131,4 @@ public class UCSBCurriculumControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedResult, responseString);
     }
-
-    @Test
-    public void test_getSubjects() throws Exception {
-
-        String expectedResult = "[]";
-        String url = "/api/ucsbcourses/subjects";
-        when(ucsbCurriculumService.getSubjectsJSON()).thenReturn(expectedResult);
-
-        MvcResult response = mockMvc.perform(get(url).contentType("application/json")).andExpect(status().isOk())
-                .andReturn();
-        String responseString = response.getResponse().getContentAsString();
-
-        assertEquals(expectedResult, responseString);
-    }
 }
