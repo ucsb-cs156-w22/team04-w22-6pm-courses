@@ -77,9 +77,6 @@ public class UCSBCurriculumServiceTest {
         assertEquals(expectedResult, result);
     }
 
-
-
-
     @Test
     public void test_getSubjectsJSON_success() throws Exception {
         String expectedResult = "[ {deptCode: \"ANTH\"} ]";
