@@ -66,15 +66,12 @@ public class UCSBSubjectsService {
 
         List<UCSBSubject> subjectsList = new ArrayList<UCSBSubject>();
         String json = getJSON();
-        // temporaryList = mapper.readValue(json, UCSBSubject.class);
-        // List<UCSBSubject> temporaryList = mapper.readValue(json, new TypeReference<List<UCSBSubject>>(){});
         try {
                 UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
                 subjectsList = new ArrayList(Arrays.asList(subjects));
                 log.info("subjectsList={}",subjectsList);
-                return subjectsList;
         }catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.toString());
         }
         return subjectsList;
         }

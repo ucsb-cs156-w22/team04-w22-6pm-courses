@@ -46,6 +46,7 @@ public class UCSBSubjectsServiceTests {
                 .andRespond(withSuccess(fakeJsonResult, MediaType.APPLICATION_JSON));
 
         String actualResult = ucsbSubjectService.getJSON();
+        log.info(actualResult);
         assertEquals(fakeJsonResult, actualResult);
     }
 
@@ -61,7 +62,7 @@ public class UCSBSubjectsServiceTests {
                 .andExpect(header("ucsb-api-key", this.ucsbApiKey))
                 .andRespond(withSuccess(JsonResult, MediaType.APPLICATION_JSON));
         
-        List<UCSBSubject> fakeResult = new ArrayList<UCSBSubject>();
+        List<UCSBSubject> fakeResult = new ArrayList<>();
         try {
                 UCSBSubject[] subjects = mapper.readValue(JsonResult, UCSBSubject[].class);
                 fakeResult = new ArrayList(Arrays.asList(subjects));
@@ -69,7 +70,40 @@ public class UCSBSubjectsServiceTests {
                 e.printStackTrace();
         }
 
+        UCSBSubject us1 = UCSBSubject.builder()
+                .subjectCode("ANTH")
+                .subjectTranslation("Anthropology")
+                .deptCode("ANTH")
+                .collegeCode("L&S")
+                .relatedDeptCode(null)
+                .inactive(false)
+                .build();
+
+        UCSBSubject us2 = UCSBSubject.builder()
+                .subjectCode("ART  CS")
+                .subjectTranslation("Art (Creative Studies)")
+                .deptCode("CRSTU")
+                .collegeCode("CRST")
+                .relatedDeptCode(null)
+                .inactive(false)
+                .build();
+
+        UCSBSubject us3 = UCSBSubject.builder()
+                .subjectCode("CH E")
+                .subjectTranslation("Chemical Engineering")
+                .deptCode("CNENG")
+                .collegeCode("ENGR")
+                .relatedDeptCode(null)
+                .inactive(false)
+                .build();
+
+        List<UCSBSubject> expectedUSs = new ArrayList<>();
         List<UCSBSubject> actualResult = ucsbSubjectService.get();
+
+        expectedUSs.addAll(Arrays.asList(us1, us2, us3));
+
+        assertEquals(expectedUSs, actualResult);
+        assertEquals(fakeResult.size(), actualResult.size());
         assertEquals(fakeResult, actualResult);
     }
 }
