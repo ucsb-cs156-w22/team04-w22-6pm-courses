@@ -46,6 +46,7 @@ public class UCSBSubjectsService {
                 headers.setAccept(List.of(MediaType.APPLICATION_JSON));
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.set("ucsb-api-key", this.ucsbApiKey);
+                headers.set("ucsb-api-version", "1.6");
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
 
