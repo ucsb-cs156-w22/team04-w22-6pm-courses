@@ -53,7 +53,6 @@ public class UCSBCurriculumService  {
         } catch (HttpClientErrorException e) {
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
-        logger.info("json: {}", retVal);
         return retVal;
     }
 
@@ -71,17 +70,13 @@ public class UCSBCurriculumService  {
         logger.info("url=" + url);
 
         String retVal = "";
-        MediaType contentType=null;
-        HttpStatus statusCode=null;
         try {
             ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            contentType = re.getHeaders().getContentType();
-            statusCode = re.getStatusCode();
             retVal = re.getBody();
         } catch (HttpClientErrorException e) {
+            logger.info(e.toString());
             retVal = "{\"error\": \"401: Unauthorized\"}";
         }
-        logger.info("json: {} contentType: {} statusCode: {}",retVal,contentType,statusCode);
         return retVal;
     }
     

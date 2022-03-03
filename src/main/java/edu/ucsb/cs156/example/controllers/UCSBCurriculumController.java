@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class UCSBCurriculumController extends ApiController {
 
     @ApiOperation(value = "Run a course search with sensible defaults")
     @GetMapping("/search")
-    public String courseSearch(
+    public ResponseEntity<String> courseSearch(
         @ApiParam("quarter")              @RequestParam(required = true ) String quarter,
         @ApiParam("courseId")             @RequestParam(required = false) String courseId,
         @ApiParam("enrollCode")           @RequestParam(required = false) String enrollCode,
@@ -73,7 +74,12 @@ public class UCSBCurriculumController extends ApiController {
 
         log.info(csp.generateParams());
 
-        return ucsbCurriculumService.courseSearchAdvanced(csp);
+        return ResponseEntity.ok().body(ucsbCurriculumService.courseSearchAdvanced(csp));
     }
+
+    @GetMapping(value = "/subjects", produces = "application/json")
+    public ResponseEntity<String> getSubjects() {
+        return ResponseEntity.ok().body(ucsbCurriculumService.getSubjectsJSON());
+    }  
 
 }
