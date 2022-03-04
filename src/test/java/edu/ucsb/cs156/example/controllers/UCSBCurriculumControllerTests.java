@@ -83,7 +83,7 @@ public class UCSBCurriculumControllerTests extends ControllerTestCase {
         csp.pageSize = 100;
         csp.includeClassSections = true;
 
-        assertEquals(csp.generateParams(), "?quarter=test&courseId=test&enrollCode=test&session=test&deptCode=&objLevelCode=A&title=test&areas=test&openSections=true&nonRestriction=true&nonPreReq=true&minUnits=2.000000&maxUnits=2.000000&minStartTime=1&maxStartTime=1&days=&instructor=&pageNumber=1&pageSize=100&includeClassSections=true");
+        assertEquals(csp.generateParams(), "?quarter=test&courseId=test&enrollCode=test&session=test&deptCode=&objLevelCode=A&title=test&areas=test&openSections=true&nonRestriction=true&nonPreReq=true&minUnits=2.0&maxUnits=2.0&minStartTime=1&maxStartTime=1&days=&instructor=&pageNumber=1&pageSize=100&includeClassSections=true");
 
         // act
         MvcResult response = mockMvc.perform(get("/api/ucsbcourses/search" + csp.generateParams()))
