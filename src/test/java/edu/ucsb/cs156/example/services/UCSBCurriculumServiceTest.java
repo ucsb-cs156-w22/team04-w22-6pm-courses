@@ -5,14 +5,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
@@ -30,15 +35,18 @@ public class UCSBCurriculumServiceTest {
     @InjectMocks
     private UCSBCurriculumService ucs;
 
-    class correctHeaders implements ArgumentMatcher<HttpEntity> {
+    static class CorrectHeaderMatcher implements ArgumentMatcher<HttpEntity> {
+
+        @Value("${app.ucsb.api.key}")
+        private String apiKey;
 
         @Override
         public boolean matches(HttpEntity stub) {
-            return
-                stub.getHeaders().containsKey("ucsb-api-version")
-                && stub.getHeaders().containsKey("ucsb-api-key")
-                && stub.getHeaders().containsKey("accept")
-                && stub.getHeaders().containsKey("content-type");
+            return 
+                stub.getHeaders().get("ucsb-api-version").contains("1.0")
+                && stub.getHeaders().get("ucsb-api-key").contains(this.apiKey)
+                && stub.getHeaders().get("accept").contains(MediaType.APPLICATION_JSON.toString())
+                && stub.getHeaders().get("content-type").contains(MediaType.APPLICATION_JSON.toString());
         }
         
     }
@@ -47,7 +55,7 @@ public class UCSBCurriculumServiceTest {
     public void test_courseSearchAdvanced_success() throws Exception {
         String expectedResult = "{expectedResult}";
 
-        when(restTemplate.exchange(any(String.class), eq(HttpMethod.GET), argThat(new correctHeaders()), eq(String.class)))
+        when(restTemplate.exchange(any(String.class), eq(HttpMethod.GET), argThat(new CorrectHeaderMatcher()), eq(String.class)))
                 .thenReturn(new ResponseEntity<String>(expectedResult, HttpStatus.OK));
 
         CourseSearchParams csp = new CourseSearchParams("20221");
@@ -64,7 +72,7 @@ public class UCSBCurriculumServiceTest {
 
         String expectedResult = "{\"error\": \"401: Unauthorized\"}";
 
-        when(restTemplate.exchange(any(String.class), eq(HttpMethod.GET), argThat(new correctHeaders()), eq(String.class)))
+        when(restTemplate.exchange(any(String.class), eq(HttpMethod.GET), argThat(new CorrectHeaderMatcher()), eq(String.class)))
                 .thenThrow(HttpClientErrorException.class);
 
 
