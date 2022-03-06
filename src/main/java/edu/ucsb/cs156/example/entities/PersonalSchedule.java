@@ -30,7 +30,7 @@ public class PersonalSchedule {
   @JoinColumn(name = "user_id")
   private User user;
 
-  private String Name;
-  private String Description;
-  private boolean Quarter;
+  private String name;
+  private String description;
+  private String quarter;
 }
