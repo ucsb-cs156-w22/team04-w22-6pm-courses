@@ -1,6 +1,8 @@
 ## emacs ##
 *~
 
+.stryker-tmp
+
 # Stryker reports
 
 frontend/.stryker-tmp
