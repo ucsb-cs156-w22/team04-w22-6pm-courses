@@ -33,7 +33,7 @@ public class UCSBSubjectsService {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        private final RestTemplate restTemplate;
+        private RestTemplate restTemplate = new RestTemplate();
 
         public UCSBSubjectsService(RestTemplateBuilder restTemplateBuilder) {
                 restTemplate = restTemplateBuilder.build();
@@ -57,24 +57,18 @@ public class UCSBSubjectsService {
                 return re.getBody();
         }
 
-        public List<UCSBSubject> get() {
+        public List<UCSBSubject> get() throws JsonProcessingException {
 
-        // TODO: Replace with a service that will call the UCSB
-        // developer API at the endpoint
-        // https://api.ucsb.edu/students/lookups/v1/subjects?includeInactive=false
-        // convert the JSON to a List<UCSBSubjects> object
-        // return that object.
-
-        List<UCSBSubject> subjectsList = new ArrayList<UCSBSubject>();
-        String json = getJSON();
-        try {
-                UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
-                subjectsList = new ArrayList(Arrays.asList(subjects));
-                log.info("subjectsList={}",subjectsList);
-        }catch (Exception e) {
-                log.error(e.toString());
+                List<UCSBSubject> subjectsList = new ArrayList<UCSBSubject>();
+                
+                String json = getJSON();
+                // try {
+                        UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
+                        subjectsList = new ArrayList(Arrays.asList(subjects));
+                        log.info("subjectsList={}",subjectsList);
+                // }catch (Exception e) {
+                //         log.error(e.toString());
+                // }
+                return subjectsList;
         }
-        return subjectsList;
-        }
-
 }

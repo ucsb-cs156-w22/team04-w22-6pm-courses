@@ -1,5 +1,7 @@
 package edu.ucsb.cs156.example.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.http.MediaType;
@@ -51,10 +53,36 @@ public class UCSBSubjectsServiceTests {
     }
 
     @Test
-    public void test_get() {
+    public void test_get() throws JsonProcessingException{
 
         String expectedURL = UCSBSubjectsService.ENDPOINT;
-        String JsonResult = "{ \"fake\" : \"result\" }";
+        String JsonResult = """
+                [{
+                \"subjectCode\": \"ANTH\",
+                \"subjectTranslation\": \"Anthropology\",
+                \"deptCode\": \"ANTH\",
+                \"collegeCode\": \"L&S\",
+                \"relatedDeptCode\": null,
+                \"inactive\": false
+                },
+                {
+                \"subjectCode\": \"ART  CS\",
+                \"subjectTranslation\": \"Art (Creative Studies)\",
+                \"deptCode\": \"CRSTU\",
+                \"collegeCode\": \"CRST\",
+                \"relatedDeptCode\": null,
+                \"inactive\": false
+                },
+                {
+                \"subjectCode\": \"ARTHI\",
+                \"subjectTranslation\": \"Art History\",
+                \"deptCode\": \"ARTHI\",
+                \"collegeCode\": \"L&S\",
+                \"relatedDeptCode\": null,
+                \"inactive\": false
+                }
+                ];
+        """;
 
         this.mockRestServiceServer.expect(requestTo(expectedURL))
                 .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
@@ -62,14 +90,6 @@ public class UCSBSubjectsServiceTests {
                 .andExpect(header("ucsb-api-key", this.ucsbApiKey))
                 .andExpect(header("ucsb-api-version", "1.6"))
                 .andRespond(withSuccess(JsonResult, MediaType.APPLICATION_JSON));
-        
-        List<UCSBSubject> fakeResult = new ArrayList<>();
-        try {
-                UCSBSubject[] subjects = mapper.readValue(JsonResult, UCSBSubject[].class);
-                fakeResult = new ArrayList(Arrays.asList(subjects));
-        }catch (Exception e) {
-                e.printStackTrace();
-        }
 
         UCSBSubject us1 = UCSBSubject.builder()
                 .subjectCode("ANTH")
@@ -90,21 +110,38 @@ public class UCSBSubjectsServiceTests {
                 .build();
 
         UCSBSubject us3 = UCSBSubject.builder()
-                .subjectCode("CH E")
-                .subjectTranslation("Chemical Engineering")
-                .deptCode("CNENG")
-                .collegeCode("ENGR")
+                .subjectCode("ARTHI")
+                .subjectTranslation("Art History")
+                .deptCode("ARTHI")
+                .collegeCode("L&S")
                 .relatedDeptCode(null)
                 .inactive(false)
                 .build();
 
         List<UCSBSubject> expectedUSs = new ArrayList<>();
+        expectedUSs.addAll(Arrays.asList(us1, us2, us3));
+        
         List<UCSBSubject> actualResult = ucsbSubjectService.get();
 
-        expectedUSs.addAll(Arrays.asList(us1, us2, us3));
-
-        // assertEquals(expectedUSs, actualResult);
-        assertEquals(fakeResult.size(), actualResult.size());
-        assertEquals(fakeResult, actualResult);
+        assertEquals(expectedUSs, actualResult);
     }
+//     @Test
+//     public void test_get_error() throws JsonProcessingException {
+
+//         String expectedURL = UCSBSubjectsService.ENDPOINT;
+//         String JsonResult = "{ \"fake\" : \"result\" }";
+
+//         this.mockRestServiceServer.expect(requestTo(expectedURL))
+//                 .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+//                 .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+//                 .andExpect(header("ucsb-api-key", this.ucsbApiKey))
+//                 .andExpect(header("ucsb-api-version", "1.6"))
+//                 .andRespond(withSuccess(JsonResult, MediaType.APPLICATION_JSON));
+
+//         List<UCSBSubject> expectedUSs = new ArrayList<>();
+        
+//         List<UCSBSubject> actualResult = ucsbSubjectService.get();
+
+//         assertEquals(expectedUSs, actualResult);
+//     }
 }
