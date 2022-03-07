@@ -36,14 +36,14 @@ import java.util.Optional;
 public class PersonalSchedulesController extends ApiController {
 
     @Autowired
-    PersonalScheduleRepository PersonalScheduleRepository;
+    PersonalScheduleRepository personalScheduleRepository;
 
     @ApiOperation(value = "List all personal schedules")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/all")
     public Iterable<PersonalSchedule> allUsersPersonalSchedules() {
-        Iterable<PersonalSchedule> PersonalSchedules = PersonalScheduleRepository.findAll();
-        return PersonalSchedules;
+        Iterable<PersonalSchedule> personalSchedules = personalScheduleRepository.findAll();
+        return personalSchedules;
     }
 
     @ApiOperation(value = "List this user's personal schedules")
@@ -51,8 +51,8 @@ public class PersonalSchedulesController extends ApiController {
     @GetMapping("/all")
     public Iterable<PersonalSchedule> thisUsersPersonalSchedules() {
         CurrentUser currentUser = getCurrentUser();
-        Iterable<PersonalSchedule> PersonalSchedules = PersonalScheduleRepository.findAllByUserId(currentUser.getUser().getId());
-        return PersonalSchedules;
+        Iterable<PersonalSchedule> personalSchedules = personalScheduleRepository.findAllByUserId(currentUser.getUser().getId());
+        return personalSchedules;
     }
 
     @ApiOperation(value = "Get a single personal schedule (if it belongs to current user)")
@@ -61,10 +61,10 @@ public class PersonalSchedulesController extends ApiController {
     public PersonalSchedule getPersonalScheduleById(
             @ApiParam("id") @RequestParam Long id) {
         User currentUser = getCurrentUser().getUser();
-        PersonalSchedule PersonalSchedule = PersonalScheduleRepository.findByIdAndUser(id, currentUser)
+        PersonalSchedule personalSchedule = personalScheduleRepository.findByIdAndUser(id, currentUser)
           .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
 
-        return PersonalSchedule;
+        return personalSchedule;
     }
 
     @ApiOperation(value = "Get a single personal schedule (no matter who it belongs to, admin only)")
@@ -72,10 +72,10 @@ public class PersonalSchedulesController extends ApiController {
     @GetMapping("/admin")
     public PersonalSchedule getPersonalScheduleById_admin(
             @ApiParam("id") @RequestParam Long id) {
-        PersonalSchedule PersonalSchedule = PersonalScheduleRepository.findById(id)
+        PersonalSchedule personalSchedule = personalScheduleRepository.findById(id)
           .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
 
-        return PersonalSchedule;
+        return personalSchedule;
     }
 
     @ApiOperation(value = "Create a new personal schedule")
@@ -88,12 +88,12 @@ public class PersonalSchedulesController extends ApiController {
         CurrentUser currentUser = getCurrentUser();
         log.info("currentUser={}", currentUser);
 
-        PersonalSchedule PersonalSchedule = new PersonalSchedule();
-        PersonalSchedule.setUser(currentUser.getUser());
-        PersonalSchedule.setName(name);
-        PersonalSchedule.setDescription(description);
-        PersonalSchedule.setQuarter(quarter);
-        PersonalSchedule savedPersonalSchedule = PersonalScheduleRepository.save(PersonalSchedule);
+        PersonalSchedule personalSchedule = new PersonalSchedule();
+        personalSchedule.setUser(currentUser.getUser());
+        personalSchedule.setName(name);
+        personalSchedule.setDescription(description);
+        personalSchedule.setQuarter(quarter);
+        PersonalSchedule savedPersonalSchedule = personalScheduleRepository.save(personalSchedule);
         return savedPersonalSchedule;
     }
 
