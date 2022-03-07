@@ -6,9 +6,9 @@ import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
 const BasicCourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 	const quarters = quarterRange("20221", "20222");
-	const levels = [["L","Undergrad-Lower"], 
-					["S","Undergrad-Upper Division"], 
-					["U","Undergrad-All"], 
+	const levels = [["L","Undergrad - Lower"], 
+					["S","Undergrad - Upper Division"], 
+					["U","Undergrad - All"], 
 					["G","Graduate"]];
 
     const localSubject = localStorage.getItem("BasicSearch.Subject");
@@ -19,7 +19,6 @@ const BasicCourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 	const [quarter, setQuarter] = useState(localQuarter || quarters[0].yyyyq);
 	const [subject, setSubject] = useState(localSubject || firstDepartment);
     const [level, setLevel] = useState(localLevel || "U");
-
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
