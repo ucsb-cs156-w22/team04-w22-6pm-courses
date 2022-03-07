@@ -125,23 +125,4 @@ public class UCSBSubjectsServiceTests {
 
         assertEquals(expectedUSs, actualResult);
     }
-//     @Test
-//     public void test_get_error() throws JsonProcessingException {
-
-//         String expectedURL = UCSBSubjectsService.ENDPOINT;
-//         String JsonResult = "{ \"fake\" : \"result\" }";
-
-//         this.mockRestServiceServer.expect(requestTo(expectedURL))
-//                 .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
-//                 .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
-//                 .andExpect(header("ucsb-api-key", this.ucsbApiKey))
-//                 .andExpect(header("ucsb-api-version", "1.6"))
-//                 .andRespond(withSuccess(JsonResult, MediaType.APPLICATION_JSON));
-
-//         List<UCSBSubject> expectedUSs = new ArrayList<>();
-        
-//         List<UCSBSubject> actualResult = ucsbSubjectService.get();
-
-//         assertEquals(expectedUSs, actualResult);
-//     }
 }

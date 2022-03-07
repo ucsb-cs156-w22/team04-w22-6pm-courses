@@ -62,13 +62,10 @@ public class UCSBSubjectsService {
                 List<UCSBSubject> subjectsList = new ArrayList<UCSBSubject>();
                 
                 String json = getJSON();
-                // try {
-                        UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
-                        subjectsList = new ArrayList(Arrays.asList(subjects));
-                        log.info("subjectsList={}",subjectsList);
-                // }catch (Exception e) {
-                //         log.error(e.toString());
-                // }
+                UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
+                subjectsList = new ArrayList(Arrays.asList(subjects));
+                log.info("subjectsList={}",subjectsList);
+                
                 return subjectsList;
         }
 }
