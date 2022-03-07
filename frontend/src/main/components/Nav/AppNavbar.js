@@ -51,6 +51,16 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               }
             </Nav>
 
+            <Nav className="mr-auto">
+              {
+              (
+                <NavDropdown title="Courses" id="appnavbar-courses-dropdown" data-testid="appnavbad-courses-dropdown" >
+                  <NavDropdown.Item href="/coursesearch/search">Course Search</NavDropdown.Item>
+                </NavDropdown>
+              )
+              }
+            </Nav>
+
             <Nav className="ml-auto">
               {
                 currentUser && currentUser.loggedIn ? (
@@ -63,6 +73,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
+
           </Navbar.Collapse>
         </Container >
       </Navbar >
