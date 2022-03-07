@@ -1,16 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { Jumbotron } from "react-bootstrap";
-import CourseSearchForm from "main/components/BasicCourseSearch/BasicCourseSearchForm";
-import { fetchCourseJSON } from "main/services/courseSearches";
-import CourseTable from "main/components/BasicCourseSearch/BasicCourseTable";
-
-import TableLegend from "main/components/BasicCourseSearch/TableLegend"; 
-
-
-
-import CourseFilters from "main/components/BasicCourseSearch/CourseFilters";
- 
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import CourseSearchForm from "main/components/CourseSearch/CourseSearchForm";
 
 const CourseSearchPage = () => {
 
@@ -47,17 +37,10 @@ const CourseSearchPage = () => {
     };
 
     return (
-        <Jumbotron>
-            <div className="text-left">
-                <h5>Welcome to the UCSB Courses Search App!</h5>
-
-                <BasicCourseSearchForm setCourseJSON={setCourseJSON} fetchJSON={fetchCourseJSON} />
-
-                <TableLegend legend />
-                <CourseFilters cancelled={cancelled} handleCancelledOnChange={handleCancelledOnChange} closed={closed} handleClosedOnChange={handleClosedOnChange} full={full} handleFullOnChange={handleFullOnChange}/>
-                <BasicCourseTable classes={courseJSON.classes} checks={[cancelled,closed,full]} allowExport = {true}/>
-            </div>
-        </Jumbotron>
+        <BasicLayout>
+            <h2>Course Search</h2>
+            <CourseSearchForm/>
+        </BasicLayout>
     );
 };
 
