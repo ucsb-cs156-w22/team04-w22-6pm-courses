@@ -5,7 +5,7 @@ import { quarterRange } from "main/utils/quarterUtils.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
 const BasicCourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
-	const quarters = quarterRange("20084", "20222");
+	const quarters = quarterRange("20221", "20222");
 	const levels = [["L","Undergrad-Lower"], 
 					["S","Undergrad-Upper Division"], 
 					["U","Undergrad-All"], 
