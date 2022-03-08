@@ -75,8 +75,8 @@ describe("CoursesTable tests", () => {
     
         expect(getByTestId(`${testId}-cell-row-0-col-quarter`)).toHaveTextContent("20222");
         expect(getByTestId(`${testId}-cell-row-0-col-description`)).toHaveTextContent("The nature of culture: survey of the range of cultural phenomena, including material culture, social...");
-
-
+        expect(getByTestId(`${testId}-cell-row-1-col-description`)).toHaveTextContent("yVkJXdic3rVyOLGwUY7PfdcREdO5tLi3o9QCC5nDCdb5Q01mCwqTmTVUYn5fvBjwPhj6YPxhYddOH3wr0IqpFsNq04BocVhiOwTu")
+        expect(getByTestId(`${testId}-cell-row-2-col-description`)).toHaveTextContent("ascnjasn asjcnajsndask sdjksja")
 
     });
 

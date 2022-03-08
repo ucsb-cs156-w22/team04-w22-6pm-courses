@@ -13,7 +13,7 @@ const coursesFixtures = {
             "quarter": "20222",
             "courseId": "CS156 ",
             "title": "ADV APP Programming",
-            "description": "safnjdfdjfjksdvnjdvnlkaslcn as kadnfafanf kaslkanfkansfnad alksfnanflnflnnl",
+            "description": "yVkJXdic3rVyOLGwUY7PfdcREdO5tLi3o9QCC5nDCdb5Q01mCwqTmTVUYn5fvBjwPhj6YPxhYddOH3wr0IqpFsNq04BocVhiOwTu",
             "objLevelCode": "U",
             "subjectArea": "CMPSC ",
             "unitsFixed": 4,
