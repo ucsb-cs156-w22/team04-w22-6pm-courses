@@ -1,5 +1,5 @@
-export const threeCourses =
-    [
+const coursesFixtures = {
+    threeCourses: [
         {
             "quarter": "20222",
             "courseId": "ANTH 2 ",
@@ -28,3 +28,6 @@ export const threeCourses =
             "unitsFixed": 4,
         },
     ]
+}
+
+export {coursesFixtures}

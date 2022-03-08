@@ -1,6 +1,6 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
 import CoursesTable from "main/components/Courses/CoursesTable";
-import {threeCourses} from 'fixtures/coursesFixtures'
+import {coursesFixtures} from 'fixtures/coursesFixtures'
 
 describe("CoursesTable tests", () => {
 
@@ -12,26 +12,26 @@ describe("CoursesTable tests", () => {
 
     test("renders a table with three rows without crashing", () => {
         render(
-            <CoursesTable courses={threeCourses} />
+            <CoursesTable courses={coursesFixtures.threeCourses} />
         );
     });
 
     test("CoursesTable is testId", async () => {
         const {getByTestId } = render(
-            <CoursesTable courses={threeCourses} />
+            <CoursesTable courses={coursesFixtures.threeCourses} />
         );
-        await waitFor( ()=> expect(getByTestId("CoursesTable-header-col1")).toBeInTheDocument() );
+        await waitFor( ()=> expect(getByTestId("CoursesTable-header-quarter")).toBeInTheDocument() );
     });
 
     test("click on a header and a sort caret should appear", async () => {
         const {getByTestId, getByText } = render(
-            <CoursesTable courses={threeCourses} />
+            <CoursesTable courses={coursesFixtures.threeCourses} />
         );
 
-        await waitFor( ()=> expect(getByTestId("CoursesTable-header-col1")).toBeInTheDocument() );
-        const col1Header = getByTestId("CoursesTable-header-col1");
+        await waitFor( ()=> expect(getByTestId("CoursesTable-header-quarter")).toBeInTheDocument() );
+        const col1Header = getByTestId("CoursesTable-header-quarter");
 
-        const col1SortCarets = getByTestId("CoursesTable-header-col1-sort-carets");
+        const col1SortCarets = getByTestId("CoursesTable-header-quarter-sort-carets");
         expect(col1SortCarets).toHaveTextContent('');
 
         const col1Row0 = getByTestId("CoursesTable-cell-row-0-col-quarter");

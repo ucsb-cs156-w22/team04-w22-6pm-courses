@@ -5,11 +5,12 @@ import OurTable from "../OurTable";
 
 export default function CoursesTable({ courses }) {
 
-    console.log(courses)
 
     courses = courses.map(course => {
         course.description = course.description.slice(0, 20) + '...'
+        return course
     })
+
 
     const columns = [
         {
