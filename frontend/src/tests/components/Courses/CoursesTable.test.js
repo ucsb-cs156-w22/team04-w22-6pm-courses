@@ -1,4 +1,4 @@
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import CoursesTable from "main/components/Courses/CoursesTable";
 import {coursesFixtures} from 'fixtures/coursesFixtures'
 
@@ -23,7 +23,7 @@ describe("CoursesTable tests", () => {
         await waitFor( ()=> expect(getByTestId("CoursesTable-header-quarter")).toBeInTheDocument() );
     });
 
-    test("click on a header and a sort caret should appear", async () => {
+    test("renders a table with three rows with correct content", async () => {
         const {getByTestId, getByText } = render(
             <CoursesTable courses={coursesFixtures.threeCourses} />
         );

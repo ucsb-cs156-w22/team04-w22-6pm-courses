@@ -1,13 +1,11 @@
 import React from "react";
-import { useTable, useSortBy } from 'react-table'
-import { Table, Button } from "react-bootstrap";
 import OurTable from "../OurTable";
 
 export default function CoursesTable({ courses }) {
 
 
     courses = courses.map(course => {
-        course.description = course.description.slice(0, 100) + '...'
+        course.description = course.description.length > 100 ? course.description.slice(0, 100) + '...' : course.description
         return course
     })
 

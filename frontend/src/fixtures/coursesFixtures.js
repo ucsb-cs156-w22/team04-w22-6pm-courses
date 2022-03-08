@@ -22,7 +22,7 @@ const coursesFixtures = {
             "quarter": "20222",
             "courseId": "ANTH 3 ",
             "title": "INTRO CULT ANTHRO",
-            "description": "ascnjasn asjcnajsndask sdjksja ka fjk iosdn",
+            "description": "ascnjasn asjcnajsndask sdjksja",
             "objLevelCode": "U",
             "subjectArea": "ANTH ",
             "unitsFixed": 4,
