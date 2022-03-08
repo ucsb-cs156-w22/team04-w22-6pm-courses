@@ -97,5 +97,70 @@ public class PersonalSchedulesController extends ApiController {
         return savedPersonalSchedule;
     }
 
+    @ApiOperation(value = "Delete a personal schedule owned by this user")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("")
+    public Object deletePersonalSchedule(
+            @ApiParam("id") @RequestParam Long id) {
+        User currentUser = getCurrentUser().getUser();
+        PersonalSchedule personalSchedule = personalScheduleRepository.findByIdAndUser(id, currentUser)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
+
+        personalScheduleRepository.delete(personalSchedule);
+
+        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
+
+    }
+
+    @ApiOperation(value = "Delete another user's personal schedule")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/admin")
+    public Object deletePersonalSchedule_Admin(
+            @ApiParam("id") @RequestParam Long id) {
+        PersonalSchedule personalSchedule = personalScheduleRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
+
+        personalScheduleRepository.delete(personalSchedule);
+
+        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
+    }
+
+    @ApiOperation(value = "Update a single personal schedule (if it belongs to current user)")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("")
+    public PersonalSchedule putPersonalScheduleById(
+            @ApiParam("id") @RequestParam Long id,
+            @RequestBody @Valid PersonalSchedule incomingPersonalSchedule) {
+        User currentUser = getCurrentUser().getUser();
+        PersonalSchedule personalSchedule = personalScheduleRepository.findByIdAndUser(id, currentUser)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
+
+        personalSchedule.setName(incomingPersonalSchedule.getName());
+        personalSchedule.setDescription(incomingPersonalSchedule.getDescription());
+        personalSchedule.setQuarter(incomingPersonalSchedule.getQuarter());
+
+        personalScheduleRepository.save(personalSchedule);
+
+        return personalSchedule;
+    }
+
+    @ApiOperation(value = "Update a single personal schedule (regardless of ownership, admin only, can't change ownership)")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/admin")
+    public PersonalSchedule putPersonalScheduleById_admin(
+            @ApiParam("id") @RequestParam Long id,
+            @RequestBody @Valid PersonalSchedule incomingPersonalSchedule) {
+        PersonalSchedule personalSchedule = personalScheduleRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
+
+        personalSchedule.setName(incomingPersonalSchedule.getName());
+        personalSchedule.setDescription(incomingPersonalSchedule.getDescription());
+        personalSchedule.setQuarter(incomingPersonalSchedule.getQuarter());
+
+        personalScheduleRepository.save(personalSchedule);
+
+        return personalSchedule;
+    }
+
 
 }
