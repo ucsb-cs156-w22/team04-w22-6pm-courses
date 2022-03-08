@@ -50,10 +50,7 @@ public class UCSBSubjectsService {
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
 
-                Map<String, String> uriVariables = Map.of("subjectCode", "", "subjectTranslation", "");
-
-                ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class,
-                        uriVariables);
+                ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class);
                 return re.getBody();
         }
 
