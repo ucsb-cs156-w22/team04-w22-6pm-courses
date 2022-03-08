@@ -45,6 +45,7 @@ export default function CoursesTable({ courses }) {
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);
+    // Stryker disable next-line ArrayDeclaration : [courses] is a performance optimization
     const memoizedCourses = React.useMemo(() => courses, [courses]);
 
 

@@ -28,22 +28,55 @@ describe("CoursesTable tests", () => {
             <CoursesTable courses={coursesFixtures.threeCourses} />
         );
 
-        await waitFor( ()=> expect(getByTestId("CoursesTable-header-quarter")).toBeInTheDocument() );
-        const col1Header = getByTestId("CoursesTable-header-quarter");
+        const columns = [
+            {
+                accessor: "quarter",
+                Header: "Quarter"
+            },
+            {
+                accessor: "courseId",
+                Header: "Course ID"
+            },
+            {
+                accessor: "title",
+                Header: "Title"
+            },
+            {
+                accessor: "description",
+                Header: "Description"
+            },
+            {
+                accessor: "objLevelCode",
+                Header: "Course Level"
+            },
+            {
+                accessor: "subjectArea",
+                Header: "Subject Area"
+            },
+            {
+                accessor: "unitsFixed",
+                Header: "Units"
+            },
+        ]
 
-        const col1SortCarets = getByTestId("CoursesTable-header-quarter-sort-carets");
-        expect(col1SortCarets).toHaveTextContent('');
+        const expectedHeaders = columns.map(column => column.Header)
+        const expectedFields = columns.map(column => column.accessor)
+        const testId = "CoursesTable";
+    
+        expectedHeaders.forEach((headerText) => {
+          const header = getByText(headerText);
+          expect(header).toBeInTheDocument();
+        });
+    
+        expectedFields.forEach((field) => {
+          const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+          expect(header).toBeInTheDocument();
+        });
+    
+        expect(getByTestId(`${testId}-cell-row-0-col-quarter`)).toHaveTextContent("20222");
+        expect(getByTestId(`${testId}-cell-row-0-col-description`)).toHaveTextContent("The nature of culture: survey of the range of cultural phenomena, including material culture, social...");
 
-        const col1Row0 = getByTestId("CoursesTable-cell-row-0-col-quarter");
-        expect(col1Row0).toHaveTextContent("20222");
 
-        fireEvent.click(col1Header);
-        await waitFor( ()=> expect(getByText("🔼")).toBeInTheDocument() );
-
-        fireEvent.click(col1Header);
-        await waitFor( ()=> expect(getByText("🔽")).toBeInTheDocument() );
-
-        
 
     });
 
