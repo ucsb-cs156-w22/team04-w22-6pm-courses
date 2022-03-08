@@ -7,7 +7,7 @@ export default function CoursesTable({ courses }) {
 
 
     courses = courses.map(course => {
-        course.description = course.description.slice(0, 20) + '...'
+        course.description = course.description.slice(0, 100) + '...'
         return course
     })
 
