@@ -19,18 +19,10 @@ const LevelSelector = ({ levels, level, setLevel, controlId, onChange = null, la
     return (
         <Form.Group controlId={controlId}>
             <Form.Label>{label}</Form.Label>
-            <Form.Control as="select" value={level} onChange={handleLevelOnChange} >
+            <Form.Control as="select" value={levelState} onChange={handleLevelOnChange} >
                 {levels.map(function (object, i) {
                     const key=`${controlId}-option-${i}`;
-                    let selString = "test";
-                    let selVal = "x";
-                    if(object[0] != null){
-                        selVal = object[0].toString();
-                    }
-                    if(object[1] != null){
-                        selString = object[1];
-                    }
-                    return <option key={key} data-testid={key} value={selVal}>{selString}</option>;
+                    return <option key={key} data-testid={key} value={object[0]}>{object[1]}</option>;
                 })}
             </Form.Control>
         </Form.Group>
