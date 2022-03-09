@@ -38,7 +38,7 @@ describe("PersonalScheduleForm tests", () => {
     });
 
 
-    /*test("Correct Error messsages on bad input", async () => {
+    test("Correct Error messsages on bad input", async () => {
 
         const { getByTestId, getByText } = render(
             <Router  >
@@ -46,17 +46,16 @@ describe("PersonalScheduleForm tests", () => {
             </Router>
         );
         await waitFor(() => expect(getByTestId("PersonalScheduleForm-name")).toBeInTheDocument());
-        // const nameField = getByTestId("PersonalScheduleForm-name");
-        // const descriptionField = getByTestId("PersonalScheduleForm-description");
+        const nameField = getByTestId("PersonalScheduleForm-name");
+        const quarterYYYYQField = getByTestId("PersonalScheduleForm-quarterYYYYQ");
         const submitButton = getByTestId("PersonalScheduleForm-submit");
 
-        // fireEvent.change(quarterYYYYQField, { target: { value: 'bad-input' } });
-        // fireEvent.change(localDateTimeField, { target: { value: 'bad-input' } });
+        fireEvent.change(nameField, { target: { value: 'bad-input' } });
+        fireEvent.change(quarterYYYYQField, { target: { value: 'bad-input' } });
         fireEvent.click(submitButton);
 
-        await waitFor(() => expect(getByText(/Description is required./)).toBeInTheDocument());
-        expect(getByText(/Name is required./)).toBeInTheDocument();
-    });*/
+        await waitFor(() => expect(getByText(/QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022/)).toBeInTheDocument());
+    });
 
     test("Correct Error messsages on missing input", async () => {
 
@@ -89,12 +88,12 @@ describe("PersonalScheduleForm tests", () => {
 
         const nameField = getByTestId("PersonalScheduleForm-name");
         const descriptionField = getByTestId("PersonalScheduleForm-description");
-        const quarterField = getByTestId("PersonalScheduleForm-quarter");
+        const quarterYYYYQField = getByTestId("PersonalScheduleForm-quarterYYYYQ");
         const submitButton = getByTestId("PersonalScheduleForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'name1' } });
         fireEvent.change(descriptionField, { target: { value: 'description1' } });
-        fireEvent.change(quarterField, { target: { value: 'quarter1' } });
+        fireEvent.change(quarterYYYYQField, { target: { value: '20224' } });
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());

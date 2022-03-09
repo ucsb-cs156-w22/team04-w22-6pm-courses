@@ -18,6 +18,8 @@ function PersonalScheduleForm({ initialPersonalSchedule, submitAction, buttonLab
 
     const navigate = useNavigate();
 
+    const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i;
+
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -65,16 +67,17 @@ function PersonalScheduleForm({ initialPersonalSchedule, submitAction, buttonLab
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="quarter">Quarter</Form.Label>
+                <Form.Label htmlFor="quarterYYYYQ">Quarter YYYYQ</Form.Label>
                 <Form.Control
-                    data-testid="PersonalScheduleForm-quarter"
-                    id="quarter"
+                    data-testid="PersonalScheduleForm-quarterYYYYQ"
+                    id="quarterYYYYQ"
                     type="text"
-                    isInvalid={Boolean(errors.quarter)}
-                    {...register("quarter", { required: "Quarter is required." })}
+                    isInvalid={Boolean(errors.quarterYYYYQ)}
+                    {...register("quarterYYYYQ", { required: true, pattern: yyyyq_regex })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.quarter?.message}
+                {errors.quarterYYYYQ && 'QuarterYYYYQ is required. '}
+                {errors.quarterYYYYQ?.type === 'pattern' && 'QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022'}
                 </Form.Control.Feedback>
             </Form.Group>
 
