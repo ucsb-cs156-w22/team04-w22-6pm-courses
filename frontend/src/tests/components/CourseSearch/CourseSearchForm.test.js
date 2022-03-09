@@ -47,7 +47,7 @@ describe("CourseSearchForm tests", () => {
 		const selectLevel = getByLabelText("Course Level");
 		userEvent.selectOptions(selectLevel, "G");
 
-		const submitButton = getByText("Submit");
+		const submitButton = getByText("Search");
 		userEvent.click(submitButton);
 
 		// we need to be careful not to assert this expectation

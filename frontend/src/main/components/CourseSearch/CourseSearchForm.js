@@ -11,9 +11,9 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 	["U", "Undergrad - All"],
 	["G", "Graduate"]];
 
-	const localSubject = localStorage.getItem("BasicSearch.Subject");
-	const localQuarter = localStorage.getItem("BasicSearch.Quarter");
-	const localLevel = localStorage.getItem("BasicSearch.CourseLevel");
+	const localSubject = localStorage.getItem("CourseSearch.Subject");
+	const localQuarter = localStorage.getItem("CourseSearch.Quarter");
+	const localLevel = localStorage.getItem("CourseSearch.CourseLevel");
 
 	const firstDepartment = allTheSubjects[0].subjectCode;
 	const [level, setLevel] = useState(localLevel || "U");
@@ -32,20 +32,21 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 
 	return (
 		<Form onSubmit={handleSubmit}>
-			<Container>
-				<Row>
-					<Col md="auto"><LevelSelector
-						levels={levels}
-						level={level}
-						setLevel={handleLevelOnChange}
-						controlId={"BasicSearch.CourseLevel"}
-						label={"Course Level"}
-					/></Col>
-				</Row>
-			</Container>
-			<Button variant="primary" type="submit">
-				Submit
-			</Button>
+			<Form.Group as={Row}>
+				<Col sm="auto">
+				<LevelSelector
+					levels={levels}
+					level={level}
+					setLevel={handleLevelOnChange}
+					controlId={"CourseSearch.CourseLevel"}
+					label={"Course Level"}
+				/></Col>
+			</Form.Group>
+			<Form.Group as={Row}>
+				<Col sm="auto">
+					<Button type="submit">Search</Button>
+				</Col>
+			</Form.Group>
 		</Form>
 	);
 };

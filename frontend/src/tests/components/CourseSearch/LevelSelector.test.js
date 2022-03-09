@@ -1,7 +1,6 @@
-import { render, waitFor } from "@testing-library/react";
+import { getByDisplayValue, getByText, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LevelSelector from "main/components/CourseSearch/LevelSelector"
-import { quarterRange } from 'main/utils/quarterUtilities';
 
 jest.mock('react', ()=>({
     ...jest.requireActual('react'),
@@ -26,6 +25,15 @@ describe("LevelSelector tests", () => {
     ["S","Undergrad - Upper Division"], 
     ["U","Undergrad - All"], 
     ["G","Graduate"]];
+
+    test("renders without crashing with no levels", () => {
+        render(<LevelSelector
+            levels={[]}
+            level={level}
+            setLevel={setLevel}
+            controlId="sqd1"
+        />);
+    })
 
     test("renders without crashing on one course level", () => {
         render(<LevelSelector
@@ -148,5 +156,44 @@ describe("LevelSelector tests", () => {
 
         await waitFor(() => expect(useState).toBeCalledWith("U"));
     });
+
+    // test("when levels array has no value for level control id, default value is used", async () => {
+
+    //     const setLevelStateSpy = jest.fn();
+    //     useState.mockImplementation((x)=>[x, setLevelStateSpy])
+
+    //     const badLevels = [["", "Undergrad - Lower"]]
+
+    //     const { getByText } =
+    //         render(<LevelSelector
+    //             levels={badLevels}
+    //             level={level}
+    //             setLevel={setLevel}
+    //             controlId="sqd1"
+    //         />
+    //         );
+    //         const expectedText = "U";
+    //         await waitFor(() => expect(getByText(expectedText).toBeInTheDocument));
+    // });
+
+    // test("when levels array has no value for level, default value is used", async () => {
+
+    //     const setLevelStateSpy = jest.fn();
+    //     useState.mockImplementation((x)=>[x, setLevelStateSpy])
+
+    //     const badLevels = [["L", ""]]
+
+    //     const { getByText } =
+    //         render(<LevelSelector
+    //             levels={badLevels}
+    //             level={level}
+    //             setLevel={setLevel}
+    //             controlId="sqd1"
+    //         />
+    //         );
+
+    //     const expectedText = "test";
+    //     await waitFor(() => expect(getByText(expectedText).toBeInTheDocument));
+    // });
 
 });
