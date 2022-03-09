@@ -1,6 +1,8 @@
 import React from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CourseSearchForm from "main/components/CourseSearch/CourseSearchForm";
+import CourseFilters from "main/components/CourseSearch/CourseFilters";
+import TableLegend from "main/components/CourseSearch/TableLegend";
 
 const CourseSearchPage = () => {
 
@@ -39,7 +41,11 @@ const CourseSearchPage = () => {
     return (
         <BasicLayout>
             <h2>Course Search</h2>
+
             <CourseSearchForm/>
+
+            <TableLegend legend />
+            <CourseFilters cancelled={cancelled} handleCancelledOnChange={handleCancelledOnChange} closed={closed} handleClosedOnChange={handleClosedOnChange} full={full} handleFullOnChange={handleFullOnChange}/>
         </BasicLayout>
     );
 };
