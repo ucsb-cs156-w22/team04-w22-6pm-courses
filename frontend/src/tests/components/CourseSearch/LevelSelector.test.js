@@ -29,7 +29,7 @@ describe("LevelSelector tests", () => {
 
     test("renders without crashing on one course level", () => {
         render(<LevelSelector
-            levels={levels[0]}
+            levels={[levels[0]]}
             level={level}
             setLevel={setLevel}
             controlId="sqd1"

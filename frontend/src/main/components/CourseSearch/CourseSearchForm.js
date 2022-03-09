@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { allTheSubjects } from "fixtures/subjectFixtures.js"
-import { quarterRange } from "main/utils/quarterUtils.js"
+import { quarterRange } from "main/utils/quarterUtilities.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
 const BasicCourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
