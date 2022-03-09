@@ -90,7 +90,7 @@ describe("PersonalScheduleForm tests", () => {
         const nameField = getByTestId("PersonalScheduleForm-name");
         const descriptionField = getByTestId("PersonalScheduleForm-description");
         const quarterField = getByTestId("PersonalScheduleForm-quarter");
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        const submitButton = getByTestId("PersonalScheduleForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'name1' } });
         fireEvent.change(descriptionField, { target: { value: 'description1' } });
