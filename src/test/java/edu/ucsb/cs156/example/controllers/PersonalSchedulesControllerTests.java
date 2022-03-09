@@ -104,7 +104,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule PersonalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u)
                 .id(7L)
                 .build();
@@ -155,7 +155,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule otherUsersPersonalSchedule = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u)
                 .id(13L)
                 .build();
@@ -186,7 +186,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule otherUsersPersonalSchedule = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u)
                 .id(27L)
                 .build();
@@ -238,21 +238,21 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule PersonalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u1)
                 .id(1L)
                 .build();
         PersonalSchedule PersonalSchedule2 = PersonalSchedule.builder()
-                .name("name 1")
-                .description("description 1")
-                .quarter("quarter 1")
+                .name("name 2")
+                .description("description 2")
+                .quarter("20222")
                 .user(u2)
                 .id(2L)
                 .build();
         PersonalSchedule PersonalSchedule3 = PersonalSchedule.builder()
-                .name("name 1")
-                .description("description 1")
-                .quarter("quarter 1")
+                .name("name 3")
+                .description("description 3")
+                .quarter("20223")
                 .user(u)
                 .id(3L)
                 .build();
@@ -285,14 +285,14 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule PersonalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(thisUser)
                 .id(1L)
                 .build();
         PersonalSchedule PersonalSchedule2 = PersonalSchedule.builder()
-                .name("name 1")
-                .description("description 1")
-                .quarter("quarter 1")
+                .name("name 2")
+                .description("description 2")
+                .quarter("20222")
                 .user(thisUser)
                 .id(2L)
                 .build();
@@ -323,7 +323,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule expectedPersonalSchedule = PersonalSchedule.builder()
                 .name("Test Name")
                 .description("Test Description")
-                .quarter("Test Quarter")
+                .quarter("Test 20221")
                 .user(u)
                 .id(0L)
                 .build();
@@ -332,7 +332,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/personalschedules/post?name=Test Name&description=Test Description&quarter=Test Quarter")
+                post("/api/personalschedules/post?name=Test Name&description=Test Description&quarter=Test 20221")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -352,7 +352,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u)
                 .id(15L)
                 .build();
@@ -381,7 +381,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(otherUser)
                 .id(15L)
                 .build();
@@ -408,7 +408,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(otherUser)
                 .id(31L)
                 .build();
@@ -436,7 +436,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(otherUser)
                 .id(16L)
                 .build();
@@ -484,7 +484,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(u)
                 .id(67L)
                 .build();
@@ -494,14 +494,14 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule updatedPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .user(otherUser)
                 .id(67L)
                 .build();
         PersonalSchedule correctPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .user(u)
                 .id(67L)
                 .build();
@@ -536,7 +536,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule updatedPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .id(67L)
                 .build();
 
@@ -570,14 +570,14 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
                 .name("name 1")
                 .description("description 1")
-                .quarter("quarter 1")
+                .quarter("20221")
                 .user(otherUser)
                 .id(31L)
                 .build();
         PersonalSchedule updatedPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .id(31L)
                 .build();
 
@@ -611,7 +611,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule personalSchedule1 = PersonalSchedule.builder()
         .name("name 1")
         .description("description 1")
-        .quarter("quarter 1")
+        .quarter("20221")
         .user(otherUser)
         .id(77L)
         .build();
@@ -621,14 +621,14 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule updatedPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .user(yetAnotherUser)
                 .id(77L)
                 .build();
         PersonalSchedule correctPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .user(otherUser)
                 .id(77L)
                 .build();
@@ -663,7 +663,7 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
         PersonalSchedule updatedPersonalSchedule = PersonalSchedule.builder()
                 .name("New name")
                 .description("New description")
-                .quarter("New quarter")
+                .quarter("20222")
                 .user(otherUser)
                 .id(77L)
                 .build();
