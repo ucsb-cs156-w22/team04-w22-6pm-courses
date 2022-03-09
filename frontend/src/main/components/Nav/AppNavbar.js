@@ -86,7 +86,6 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
-
           </Navbar.Collapse>
         </Container >
       </Navbar >
