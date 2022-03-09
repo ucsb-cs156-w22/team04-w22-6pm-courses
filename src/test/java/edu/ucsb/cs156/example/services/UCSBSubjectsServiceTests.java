@@ -29,7 +29,7 @@ public class UCSBSubjectsServiceTests {
     private MockRestServiceServer mockRestServiceServer;
 
     @Autowired
-    private UCSBSubjectsService ucsbSubjectService;
+    private UCSBSubjectsService ucsbSubjectsService;
 
     @Value("${app.ucsb.api.key}") private String ucsbApiKey;
 
@@ -48,7 +48,7 @@ public class UCSBSubjectsServiceTests {
                 .andExpect(header("ucsb-api-version", "1.6"))
                 .andRespond(withSuccess(fakeJsonResult, MediaType.APPLICATION_JSON));
 
-        String actualResult = ucsbSubjectService.getJSON();
+        String actualResult = ucsbSubjectsService.getJSON();
         assertEquals(fakeJsonResult, actualResult);
     }
 
@@ -121,7 +121,7 @@ public class UCSBSubjectsServiceTests {
         List<UCSBSubject> expectedUSs = new ArrayList<>();
         expectedUSs.addAll(Arrays.asList(us1, us2, us3));
         
-        List<UCSBSubject> actualResult = ucsbSubjectService.get();
+        List<UCSBSubject> actualResult = ucsbSubjectsService.get();
 
         assertEquals(expectedUSs, actualResult);
     }

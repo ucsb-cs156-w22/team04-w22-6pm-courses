@@ -1,6 +1,5 @@
 package edu.ucsb.cs156.example.services;
 
-import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,11 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
 
 import edu.ucsb.cs156.example.entities.UCSBSubject;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,8 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-
 import org.springframework.beans.factory.annotation.Value;
+
 
 @Slf4j
 @Service("UCSBSubjects")
@@ -65,7 +65,7 @@ public class UCSBSubjectsService {
                 UCSBSubject[] subjects = mapper.readValue(json, UCSBSubject[].class);
                 subjectsList = new ArrayList(Arrays.asList(subjects));
                 log.info("subjectsList={}",subjectsList);
-                
+
                 return subjectsList;
         }
 }
