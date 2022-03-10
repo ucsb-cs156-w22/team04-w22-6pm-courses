@@ -14,7 +14,9 @@ describe("CourseSearchForm tests", () => {
 		const { getByLabelText } = render(<CourseSearchForm />);
 		const selectLevel = getByLabelText("Course Level");
 		userEvent.selectOptions(selectLevel, "G");
+
 		expect(selectLevel.value).toBe("G");
+		expect(localStorage.getItem("CourseSearch.CourseLevel")).toBe("G");
 	});
 
 	test("when I click submit, the right stuff happens", async () => {

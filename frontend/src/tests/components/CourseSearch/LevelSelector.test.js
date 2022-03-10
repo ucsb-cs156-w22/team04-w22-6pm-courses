@@ -1,6 +1,7 @@
 import { getByDisplayValue, getByText, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import LevelSelector from "main/components/CourseSearch/LevelSelector"
+import LevelSelector from "main/components/CourseSearch/LevelSelector";
+import * as levelsFixtures from "fixtures/levelsFixtures";
 
 jest.mock('react', ()=>({
     ...jest.requireActual('react'),
@@ -21,10 +22,7 @@ describe("LevelSelector tests", () => {
     const level = jest.fn();
     const setLevel = jest.fn();
 
-    const levels = [["L","Undergrad - Lower"], 
-    ["S","Undergrad - Upper Division"], 
-    ["U","Undergrad - All"], 
-    ["G","Graduate"]];
+    const levels = Object.values(levelsFixtures.allLevels);
 
     test("renders without crashing with no levels", () => {
         render(<LevelSelector
@@ -114,17 +112,14 @@ describe("LevelSelector tests", () => {
                 controlId="sqd1"
             />
             );
-        const expectedKey = "sqd1-option-0"
+        const expectedKey = "sqd1-option-0";
         await waitFor(() => expect(getByTestId(expectedKey).toBeInTheDocument));
         const firstOption = getByTestId(expectedKey);
     });
 
-    test("when localstorage has a value, it is passed to useState", async () => {
+    test("when localstorage has a value, it is used in the document", async () => {
         const getItemSpy = jest.spyOn(Storage.prototype, 'getItem');
-        getItemSpy.mockImplementation(() => "L");
-
-        const setLevelStateSpy = jest.fn();
-        useState.mockImplementation((x)=>[x, setLevelStateSpy])
+        getItemSpy.mockImplementation(() => "G");
 
         const { getByTestId } =
             render(<LevelSelector
@@ -135,7 +130,8 @@ describe("LevelSelector tests", () => {
             />
             );
 
-        await waitFor(() => expect(useState).toBeCalledWith("L"));
+        const expectedKey = "sqd1-option-3";
+        await waitFor(() => expect(getByTestId(expectedKey).toBeInTheDocument));
     });
 
     test("when localstorage has no value, first element of level is passed to useState", async () => {
@@ -154,46 +150,7 @@ describe("LevelSelector tests", () => {
             />
             );
 
-        await waitFor(() => expect(useState).toBeCalledWith("U"));
+        const expectedKey = "sqd1-option-0";
+        await waitFor(() => expect(getByTestId(expectedKey).toBeInTheDocument));
     });
-
-    // test("when levels array has no value for level control id, default value is used", async () => {
-
-    //     const setLevelStateSpy = jest.fn();
-    //     useState.mockImplementation((x)=>[x, setLevelStateSpy])
-
-    //     const badLevels = [["", "Undergrad - Lower"]]
-
-    //     const { getByText } =
-    //         render(<LevelSelector
-    //             levels={badLevels}
-    //             level={level}
-    //             setLevel={setLevel}
-    //             controlId="sqd1"
-    //         />
-    //         );
-    //         const expectedText = "U";
-    //         await waitFor(() => expect(getByText(expectedText).toBeInTheDocument));
-    // });
-
-    // test("when levels array has no value for level, default value is used", async () => {
-
-    //     const setLevelStateSpy = jest.fn();
-    //     useState.mockImplementation((x)=>[x, setLevelStateSpy])
-
-    //     const badLevels = [["L", ""]]
-
-    //     const { getByText } =
-    //         render(<LevelSelector
-    //             levels={badLevels}
-    //             level={level}
-    //             setLevel={setLevel}
-    //             controlId="sqd1"
-    //         />
-    //         );
-
-    //     const expectedText = "test";
-    //     await waitFor(() => expect(getByText(expectedText).toBeInTheDocument));
-    // });
-
 });

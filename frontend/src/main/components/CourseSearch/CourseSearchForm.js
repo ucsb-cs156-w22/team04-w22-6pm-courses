@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { allTheSubjects } from "fixtures/subjectFixtures.js"
-import { quarterRange } from "main/utils/quarterUtilities.js"
+import { allLevels } from "main/utils/levelsUtils_NoStryker.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
 const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
-	const quarters = quarterRange("20221", "20222");
-	const levels = [["L", "Undergrad - Lower"],
-	["S", "Undergrad - Upper Division"],
-	["U", "Undergrad - All"],
-	["G", "Graduate"]];
-
-	const localSubject = localStorage.getItem("CourseSearch.Subject");
-	const localQuarter = localStorage.getItem("CourseSearch.Quarter");
+	const levels = Object.values(allLevels);
+	//Stryker disable next-line all : this value is hard coded and shouldn't ever change
 	const localLevel = localStorage.getItem("CourseSearch.CourseLevel");
 
-	const firstDepartment = allTheSubjects[0].subjectCode;
-	const [level, setLevel] = useState(localLevel || "U");
+	//Stryker disable next-line all : these values aren't booleans and cannot become booleans
+	const [level, setLevel] = useState(localLevel || allLevels[0].levelShort);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -25,8 +19,10 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 		});
 	};
 
+	//Stryker disable next-line all : handleLevelOnChange is passed into the levelSelector as setLevel which tests if setLevel gets called properly
 	const handleLevelOnChange = (level) => {
-		localStorage.setItem("BasicSearch.CourseLevel", level);
+		//Stryker disable next-line StringLiteral : key value is hard coded
+		localStorage.setItem("CourseSearch.CourseLevel", level);
 		setLevel(level);
 	};
 
