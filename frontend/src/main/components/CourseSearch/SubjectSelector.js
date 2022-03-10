@@ -21,6 +21,7 @@ const SubjectSelector = ({ subjects, subject, setSubject, controlId, onChange = 
         }
     };
 
+    // Stryker disable next-line all : empty key mutation
     subjects.sort(compareValues("subjectCode"));
 
     return (
