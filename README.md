@@ -2,6 +2,9 @@
 
 [![codecov](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-6pm-courses/branch/main/graph/badge.svg?token=SmRwZrdYnM)](https://codecov.io/gh/ucsb-cs156-w22/team04-w22-6pm-courses)
 
+Deployments are here:
+* Production: <https://team04-w22-6pm-2.herokuapp.com/>
+* QA:  <https://team04-w22-6pm-2-qa.herokuapp.com>
 
 Storybook is here:
 * Production: <https://ucsb-cs156-w22.github.io/team04-w22-6pm-courses-docs/>
