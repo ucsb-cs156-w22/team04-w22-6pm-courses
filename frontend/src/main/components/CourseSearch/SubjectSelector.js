@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { compareValues } from "main/utils/sortHelper"
 
-const SubjectSelector = ({ subjects, subject, setSubject, controlId, onChange = null, label = "Subject" }) => {
+const SubjectSelector = ({ subjects, setSubject, controlId, onChange = null, label = "Subject" }) => {
     
     const localSearchSubject = localStorage.getItem(controlId);
 
