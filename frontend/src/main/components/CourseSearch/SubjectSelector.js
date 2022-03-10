@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { compareValues } from "main/utils/sortHelper"
 
-const SelectSubject = ({ subjects, subject, setSubject, controlId, onChange = null, label = "Subject" }) => {
+const SubjectSelector = ({ subjects, subject, setSubject, controlId, onChange = null, label = "Subject" }) => {
     
     const localSearchSubject = localStorage.getItem(controlId);
 
     const [subjectState, setSubjectState] = useState(
-        // Stryker disable next-line all : not sure how to test/mock local storage
+        // Stryker disable next-line all: not sure how to text/mock local storage
         localSearchSubject || subjects[0].subjectCode
-        );
+    );
 
     const handleSubjectOnChange = (event) => {
         const selectedSubject = event.target.value;
@@ -48,4 +48,4 @@ const SelectSubject = ({ subjects, subject, setSubject, controlId, onChange = nu
     );
 };
 
-export default SelectSubject;
+export default SubjectSelector;

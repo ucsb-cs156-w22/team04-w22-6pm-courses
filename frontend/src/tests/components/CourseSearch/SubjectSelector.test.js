@@ -1,15 +1,15 @@
 import { render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SelectSubject from "main/components/SelectSubject.js"
+import SubjectSelector from "main/components/CourseSearch/SubjectSelector.js"
 import * as subjectFixtures from "fixtures/subjectFixtures.js"
+import { useState } from 'react';
 
 jest.mock('react', ()=>({
     ...jest.requireActual('react'),
     useState: jest.fn()
   }))
-import { useState } from 'react';
 
-describe("SingleQuarterSelector tests", () => {
+describe("SubjectSelector tests", () => {
 
     beforeEach(() => {
         useState.mockImplementation(jest.requireActual('react').useState);
@@ -23,7 +23,7 @@ describe("SingleQuarterSelector tests", () => {
     const setSubject = jest.fn();
 
     test("renders without crashing on one subjects", () => {
-        render(<SelectSubject 
+        render(<SubjectSelector
             subjects={subjectFixtures.oneSubject} 
             subject={subject} 
             setSubject={setSubject}
@@ -32,7 +32,7 @@ describe("SingleQuarterSelector tests", () => {
     });
 
     test("renders without crashing on three subjects", () => {
-        render(<SelectSubject 
+        render(<SubjectSelector
             subjects={subjectFixtures.threeSubjects} 
             subject={subject} 
             setSubject={setSubject}
@@ -41,7 +41,7 @@ describe("SingleQuarterSelector tests", () => {
     });
 
     test("renders without crashing on many subjects", () => {
-        render(<SelectSubject 
+        render(<SubjectSelector
             subjects={subjectFixtures.allTheSubjects} 
             subject={subject} 
             setSubject={setSubject}
@@ -52,7 +52,7 @@ describe("SingleQuarterSelector tests", () => {
 
     test("when I select an object, the value changes", async () => {
         const {getByLabelText} = 
-            render(<SelectSubject 
+            render(<SubjectSelector 
                 subjects={subjectFixtures.allTheSubjects} 
                 subject={subject} 
                 setSubject={setSubject}
@@ -67,7 +67,7 @@ describe("SingleQuarterSelector tests", () => {
     test("if I pass a non-null onChange, it gets called when the value changes", async () => {
         const onChange = jest.fn();
         const { getByLabelText } =
-            render(<SelectSubject
+            render(<SubjectSelector
                 subjects={subjectFixtures.allTheSubjects} 
                 subject={subject} 
                 setSubject={setSubject}
@@ -88,7 +88,7 @@ describe("SingleQuarterSelector tests", () => {
 
     test("default label is Subject", async () => {
         const { getByLabelText } =
-            render(<SelectSubject
+            render(<SubjectSelector
                 subjects={subjectFixtures.oneSubject} 
                 subject={subject} 
                 setSubject={setSubject}
@@ -99,7 +99,7 @@ describe("SingleQuarterSelector tests", () => {
 
     test("keys / testids are set correctly on options", async () => {
         const { getByTestId } =
-            render(<SelectSubject
+            render(<SubjectSelector
                 subjects={subjectFixtures.oneSubject} 
                 subject={subject} 
                 setSubject={setSubject}
@@ -112,23 +112,24 @@ describe("SingleQuarterSelector tests", () => {
 
     test("when localstorage has a value, it is passed to useState", async () => {
         const getItemSpy = jest.spyOn(Storage.prototype, 'getItem');
-        getItemSpy.mockImplementation(() => "CMPSC");
+        getItemSpy.mockImplementation(() => "ANTH");
 
         const setSubjectStateSpy = jest.fn();
         useState.mockImplementation((x)=>[x, setSubjectStateSpy])
 
         const { getByTestId } =
-            render(<SelectSubject
-                subjects={subjectFixtures.allTheSubjects} 
-                subject={subject} 
+            render(<SubjectSelector
+                subjects={subjectFixtures.allTheSubjects}
+                subject={subject}
                 setSubject={setSubject}
-                controlId="ss1" 
-            />);
+                controlId="ss1"
+            />
+            );
 
-        await waitFor(() => expect(useState).toBeCalledWith("CMPSC"));
+        await waitFor(() => expect(useState).toBeCalledWith("ANTH"));
     });
 
-    test("when localstorage has no value, first element of subjects is passed to useState", async () => {
+    test("when localstorage has no value, first element of subject list is passed to useState", async () => {
         const getItemSpy = jest.spyOn(Storage.prototype, 'getItem');
         getItemSpy.mockImplementation(() => null);
 
@@ -136,14 +137,14 @@ describe("SingleQuarterSelector tests", () => {
         useState.mockImplementation((x)=>[x, setSubjectStateSpy])
 
         const { getByTestId } =
-            render(<SelectSubject
-                subjects={subjectFixtures.allTheSubjects} 
-                subject={subject} 
+            render(<SubjectSelector
+                subjects={subjectFixtures.threeSubjects}
+                subject={subject}
                 setSubject={setSubject}
-                controlId="ss1" 
-            />);
+                controlId="ss1"
+            />
+            );
 
         await waitFor(() => expect(useState).toBeCalledWith("ANTH"));
     });
-
 });

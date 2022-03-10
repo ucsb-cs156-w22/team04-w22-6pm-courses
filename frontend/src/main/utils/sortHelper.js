@@ -1,3 +1,4 @@
+// Stryker-disable next-line all: Empty compare 
 export function compareValues(key, order = 'asc') {
     return function innerSort(a, b) {
       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {

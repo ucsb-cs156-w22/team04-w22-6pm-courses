@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-import SelectSubject from "main/components/SelectSubject.js";
+import SubjectSelector from "main/components/CourseSearch/SubjectSelector.js";
 
 import * as subjectFixtures from "fixtures/subjectFixtures.js"
 
 export default {
-  title: 'components/BasicCourseSearch/SelectSubject',
-  component: SelectSubject
+  title: 'components/CourseSearch/SubjectSelector',
+  component: SubjectSelector
 };
 
 const Template = (args) => {
   const [subject, setSubject] = useState("ANTH");
 
   return (
-    < SelectSubject setSubject={setSubject} subject={subject} {...args} />
+    <SubjectSelector setSubject={setSubject} subject={subject} {...args} />
   )
 };
 
