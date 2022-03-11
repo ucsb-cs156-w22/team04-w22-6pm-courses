@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CourseSearchForm from "main/components/CourseSearch/CourseSearchForm";
 import CourseFilters from "main/components/CourseSearch/CourseFilters";
