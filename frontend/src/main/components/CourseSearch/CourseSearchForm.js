@@ -6,8 +6,7 @@ import SubjectSelector from "./SubjectSelector";
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 import SingleQuarterDropdown from "main/components/Quarters/SingleQuarterDropdown";
 import { toast } from "react-toastify";
-
-import { useBackend } from "main/utils/useBackend"
+import axios from "axios";
 
 const CourseSearchForm = ({ fetchJSON }) => {
 	const levels = Object.values(allLevels);
@@ -23,15 +22,19 @@ const CourseSearchForm = ({ fetchJSON }) => {
 	const [level, setLevel] = useState(localLevel || allLevels[0].levelShort);
 	const [quarter, setQuarter] = useState(localQuarter || quarters[0].yyyyq);
 	const [subject, setSubject] = useState(localSubject || firstDepartment);
+	const [subjects, setSubjects] = useState(undefined);
 
-	const { data: subjects, error: errorGettingSubjects } = useBackend(
-		"fetchSubjects",
-		"/api/UCSBSubjects/all",
-		{
-			initialData: [],
-			revalidateOnMount: true,
-		}
-	);
+	if(subjects === undefined){
+		axios({
+			url: "/api/UCSBSubjects/all",
+			method: "GET"
+		}).then(e => {setSubjects(e.data)}).catch(e => {
+			toast("Error performing course search", {
+				appearance: "error",
+			});
+			setSubjects({})
+		})
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
