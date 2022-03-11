@@ -70,7 +70,6 @@ const CourseSearchForm = ({ fetchJSON }) => {
 				<Col sm="auto">
 				<LevelSelector
 					levels={levels}
-					level={level}
 					setLevel={handleLevelOnChange}
 					controlId={"CourseSearch.CourseLevel"}
 					label={"Course Level"}
