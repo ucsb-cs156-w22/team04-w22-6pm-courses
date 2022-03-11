@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-
+import SingleQuarterDropdown from '../Quarters/SingleQuarterDropdown';
+import { quarterRange } from 'main/utils/quarterUtilities';
 
 function PersonalScheduleForm({ initialPersonalSchedule, submitAction, buttonLabel="Create" }) {
 
@@ -18,7 +19,9 @@ function PersonalScheduleForm({ initialPersonalSchedule, submitAction, buttonLab
 
     const navigate = useNavigate();
 
-    const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i;
+    const [quarter, setQuarter] = useState({
+        quarters: quarterRange("20081", "20213")
+    }.quarters[0]);
 
     return (
 
@@ -66,19 +69,13 @@ function PersonalScheduleForm({ initialPersonalSchedule, submitAction, buttonLab
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="quarterYYYYQ">Quarter YYYYQ</Form.Label>
-                <Form.Control
-                    data-testid="PersonalScheduleForm-quarterYYYYQ"
-                    id="quarterYYYYQ"
-                    type="text"
-                    isInvalid={Boolean(errors.quarterYYYYQ)}
-                    {...register("quarterYYYYQ", { required: true, pattern: yyyyq_regex })}
-                />
-                <Form.Control.Feedback type="invalid">
-                {errors.quarterYYYYQ && 'QuarterYYYYQ is required. '}
-                {errors.quarterYYYYQ?.type === 'pattern' && 'QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022'}
-                </Form.Control.Feedback>
+            <Form.Group className="mb-3" data-testid="PersonalScheduleForm-quarter">
+                <SingleQuarterDropdown
+                    quarter={quarter}
+                    setQuarter={setQuarter} 
+                    controlId={"PersonalScheduleForm-quarter"}
+                    label={"Quarter"}
+                    quarters={quarterRange("20081", "20224") }/>
             </Form.Group>
 
             <Button
