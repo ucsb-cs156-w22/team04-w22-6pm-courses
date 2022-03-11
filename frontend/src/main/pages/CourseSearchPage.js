@@ -8,8 +8,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import CoursesTable from "main/components/Courses/CoursesTable";
 
-import { useBackend } from "main/utils/useBackend"
-
 const CourseSearchPage = () => {
 
     // every function that starts with "use" is a hook
@@ -25,9 +23,6 @@ const CourseSearchPage = () => {
         "total": 0,
         "classes": []
     };
-
-    // courseId, title, sectionNumber, instructor, enroll code, units, total enrolled students, max enrolled
-    const [courseJSON, setCourseJSON] = useState(initialCourseJSON);
 
     //Check for closed, cancelled, full status
     const [cancelled, setCancelledChecked] = useState(false);
