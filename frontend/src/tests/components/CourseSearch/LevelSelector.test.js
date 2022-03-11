@@ -19,7 +19,6 @@ describe("LevelSelector tests", () => {
         jest.clearAllMocks();
     });
 
-    const level = jest.fn();
     const setLevel = jest.fn();
 
     const levels = Object.values(levelsFixtures.allLevels);
@@ -27,7 +26,6 @@ describe("LevelSelector tests", () => {
     test("renders without crashing with no levels", () => {
         render(<LevelSelector
             levels={[]}
-            level={level}
             setLevel={setLevel}
             controlId="sqd1"
         />);
@@ -36,7 +34,6 @@ describe("LevelSelector tests", () => {
     test("renders without crashing on one course level", () => {
         render(<LevelSelector
             levels={[levels[0]]}
-            level={level}
             setLevel={setLevel}
             controlId="sqd1"
         />);
@@ -45,7 +42,6 @@ describe("LevelSelector tests", () => {
     test("renders without crashing on four levels", () => {
         render(<LevelSelector
             levels={levels}
-            level={level}
             setLevel={setLevel}
             controlId="sqd1"
         />);
@@ -55,7 +51,6 @@ describe("LevelSelector tests", () => {
         const { getByLabelText } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
                 label="Select Level"
@@ -72,7 +67,6 @@ describe("LevelSelector tests", () => {
         const { getByLabelText } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
                 label="Select Level"
@@ -95,7 +89,6 @@ describe("LevelSelector tests", () => {
         const { getByLabelText } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
             />
@@ -107,14 +100,12 @@ describe("LevelSelector tests", () => {
         const { getByTestId } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
             />
             );
         const expectedKey = "sqd1-option-0";
         await waitFor(() => expect(getByTestId(expectedKey).toBeInTheDocument));
-        const firstOption = getByTestId(expectedKey);
     });
 
     test("when localstorage has a value, it is used in the document", async () => {
@@ -124,7 +115,6 @@ describe("LevelSelector tests", () => {
         const { getByTestId } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
             />
@@ -144,7 +134,6 @@ describe("LevelSelector tests", () => {
         const { getByTestId } =
             render(<LevelSelector
                 levels={levels}
-                level={level}
                 setLevel={setLevel}
                 controlId="sqd1"
             />

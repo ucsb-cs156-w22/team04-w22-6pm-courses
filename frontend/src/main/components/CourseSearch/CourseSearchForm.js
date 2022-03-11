@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { allTheSubjects } from "fixtures/subjectFixtures.js"
+import React, { useState } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { allLevels } from "main/utils/levelsUtils_NoStryker.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
@@ -32,7 +31,6 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 				<Col sm="auto">
 				<LevelSelector
 					levels={levels}
-					level={level}
 					setLevel={handleLevelOnChange}
 					controlId={"CourseSearch.CourseLevel"}
 					label={"Course Level"}

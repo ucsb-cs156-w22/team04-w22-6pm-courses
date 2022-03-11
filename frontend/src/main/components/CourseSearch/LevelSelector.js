@@ -1,7 +1,7 @@
 import React, { useState }  from "react";
 import { Form } from "react-bootstrap";
 
-const LevelSelector = ({ levels, level, setLevel, controlId, onChange = null, label = "Level"}) => {
+const LevelSelector = ({ levels, setLevel, controlId, onChange = null, label = "Level"}) => {
 
     const localSearchLevel = localStorage.getItem(controlId);
     //Stryker disable next-line all : this value is not a boolean nor can it become one. Also the default value is hard coded
