@@ -22,9 +22,17 @@ const CourseSearchForm = ({ fetchJSON }) => {
 	const [level, setLevel] = useState(localLevel || allLevels[0].levelShort);
 	const [quarter, setQuarter] = useState(localQuarter || quarters[0].yyyyq);
 	const [subject, setSubject] = useState(localSubject || firstDepartment);
-	const [subjects, setSubjects] = useState(undefined);
+	const [subjects, setSubjects] = useState([{
+        "id" : "ANTH      2  ",
+        "subjectCode": "ANTH    ",
+        "subjectTranslation" : "INTRO CULT ANTHRO",
+        "deptCode" : "ANTH",
+        "collegeCode" : "L&S",
+        "relatedDeptCode" :"ANTH",
+        "inactive" : false
+    }]);
 
-	if(subjects === undefined){
+	if(subjects.length === 1){
 		axios({
 			url: "/api/UCSBSubjects/all",
 			method: "GET"

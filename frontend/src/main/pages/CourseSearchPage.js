@@ -49,11 +49,7 @@ const CourseSearchPage = () => {
                 subjectCode: subject.split(" -")[0],
                 objLevelCode: level
             }
-        }).then(e => e.data.classes).catch(e => {
-            toast("Error performing course search", {
-                appearance: "error",
-            });
-        })
+        }).then(e => e.data.classes).catch(e => {})
         setCourses(response);
     };
 
