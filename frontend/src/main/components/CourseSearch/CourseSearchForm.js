@@ -30,18 +30,6 @@ const CourseSearchForm = ({ fetchJSON }) => {
 			method: "GET"
 		}).then(e => {
 			setSubjects(e.data)
-			if(e.data.length === 0) // Attempt to load in the course list
-				axios({
-					url: "/api/UCSBSubjects/load",
-					method: "POST"
-				}).then(e => {
-					location.reload()
-				}).catch(e => {})
-		}).catch(e => {
-			toast("Error performing course search", {
-				appearance: "error",
-			});
-			setSubjects({})
 		})
 	}
 
