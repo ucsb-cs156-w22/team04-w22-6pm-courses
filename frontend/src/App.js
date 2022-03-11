@@ -5,6 +5,7 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import CourseSearchPage from "main/pages/CourseSearchPage";
 import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSchedulesIndexPage";
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
+import AdminPersonalSchedulesIndexPage from "main/pages/AdminPersonalSchedules/AdminPersonalSchedulesIndexPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -20,7 +21,13 @@ function App() {
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/profile" element={<ProfilePage />} />
         {
-          hasRole(currentUser, "ROLE_ADMIN") && <Route exact path="/admin/users" element={<AdminUsersPage />} />
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/admin/users" element={<AdminUsersPage />} />
+              <Route exact path="/admin/personalschedules/list" element={<AdminPersonalSchedulesIndexPage />} />
+
+            </>
+          )
         }
         {
           hasRole(currentUser, "ROLE_USER") && (
