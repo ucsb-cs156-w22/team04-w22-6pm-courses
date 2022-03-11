@@ -67,7 +67,7 @@ export default function UCSBSubjectsTable({ subjects, currentUser }) {
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);
     const memoizedSubjects = React.useMemo(() => subjects, [subjects]);
-
+    
     return <OurTable
         data={memoizedSubjects}
         columns={memoizedColumns}
