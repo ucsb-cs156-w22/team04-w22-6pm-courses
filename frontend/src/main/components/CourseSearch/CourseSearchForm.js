@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { allLevels } from "main/utils/levelsUtils_NoStryker.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
+import { toast } from "react-toastify";
 
-const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
+const CourseSearchForm = ({ fetchJSON }) => {
 	const levels = Object.values(allLevels);
 	//Stryker disable next-line all : this value is hard coded and shouldn't ever change
 	const localLevel = localStorage.getItem("CourseSearch.CourseLevel");
@@ -13,9 +14,8 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		fetchJSON(event, { level }).then((courseJSON) => {
-			setCourseJSON(courseJSON);
-		});
+		//this is a stub and doesn't actually do anything yet
+		fetchJSON(event, { level });
 	};
 
 	//Stryker disable next-line all : handleLevelOnChange is passed into the levelSelector as setLevel which tests if setLevel gets called properly
