@@ -1,128 +1,60 @@
 package edu.ucsb.cs156.example.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.client.MockRestServiceServer;
-import edu.ucsb.cs156.example.entities.UCSBSubject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 import org.springframework.beans.factory.annotation.Value;
 
 @RestClientTest(UCSBSubjectsService.class)
 public class UCSBSubjectsServiceTests {
 
-    @Autowired
-    private MockRestServiceServer mockRestServiceServer;
+        @Mock
+        private RestTemplate restTemplate;
 
-    @Autowired
-    private UCSBSubjectsService ucsbSubjectsService;
+        @InjectMocks
+        private UCSBSubjectsService ucsbSubjectsService;
 
-    @Value("${app.ucsb.api.key}") private String ucsbApiKey;
+        static class CorrectHeaderMatcher implements ArgumentMatcher<HttpEntity> {
 
-    ObjectMapper mapper = new ObjectMapper();
+                @Value("${app.ucsb.api.key}")
+                private String apiKey;
 
-    @Test
-    public void test_getJSON() {
-
-        String expectedURL = UCSBSubjectsService.ENDPOINT;
-        String fakeJsonResult = "{ \"fake\" : \"result\" }";
-
-        this.mockRestServiceServer.expect(requestTo(expectedURL))
-                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
-                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
-                .andExpect(header("ucsb-api-key", this.ucsbApiKey))
-                .andExpect(header("ucsb-api-version", "1.6"))
-                .andRespond(withSuccess(fakeJsonResult, MediaType.APPLICATION_JSON));
-
-        String actualResult = ucsbSubjectsService.getJSON();
-        assertEquals(fakeJsonResult, actualResult);
-    }
-
-    @Test
-    public void test_get() throws JsonProcessingException{
-
-        String expectedURL = UCSBSubjectsService.ENDPOINT;
-        String JsonResult = """
-                [{
-                \"subjectCode\": \"ANTH\",
-                \"subjectTranslation\": \"Anthropology\",
-                \"deptCode\": \"ANTH\",
-                \"collegeCode\": \"L&S\",
-                \"relatedDeptCode\": null,
-                \"inactive\": false
-                },
-                {
-                \"subjectCode\": \"ART  CS\",
-                \"subjectTranslation\": \"Art (Creative Studies)\",
-                \"deptCode\": \"CRSTU\",
-                \"collegeCode\": \"CRST\",
-                \"relatedDeptCode\": null,
-                \"inactive\": false
-                },
-                {
-                \"subjectCode\": \"ARTHI\",
-                \"subjectTranslation\": \"Art History\",
-                \"deptCode\": \"ARTHI\",
-                \"collegeCode\": \"L&S\",
-                \"relatedDeptCode\": null,
-                \"inactive\": false
+                @Override
+                public boolean matches(HttpEntity stub) {
+                return 
+                        stub.getHeaders().get("ucsb-api-version").contains("1.6")
+                        && stub.getHeaders().get("ucsb-api-key").contains(this.apiKey)
+                        && stub.getHeaders().get("accept").contains(MediaType.APPLICATION_JSON.toString())
+                        && stub.getHeaders().get("content-type").contains(MediaType.APPLICATION_JSON.toString());
                 }
-                ];
-        """;
+                
+        }
 
-        this.mockRestServiceServer.expect(requestTo(expectedURL))
-                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
-                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
-                .andExpect(header("ucsb-api-key", this.ucsbApiKey))
-                .andExpect(header("ucsb-api-version", "1.6"))
-                .andRespond(withSuccess(JsonResult, MediaType.APPLICATION_JSON));
+        @Test
+        public void test_getJSON_success_and_expected() throws Exception {
+                String expectedResult = "{expectedResult}";
 
-        UCSBSubject us1 = UCSBSubject.builder()
-                .subjectCode("ANTH")
-                .subjectTranslation("Anthropology")
-                .deptCode("ANTH")
-                .collegeCode("L&S")
-                .relatedDeptCode(null)
-                .inactive(false)
-                .build();
+                when(restTemplate.exchange(any(String.class), eq(HttpMethod.GET), argThat(new CorrectHeaderMatcher()), eq(String.class)))
+                        .thenReturn(new ResponseEntity<String>(expectedResult, HttpStatus.OK));
 
-        UCSBSubject us2 = UCSBSubject.builder()
-                .subjectCode("ART  CS")
-                .subjectTranslation("Art (Creative Studies)")
-                .deptCode("CRSTU")
-                .collegeCode("CRST")
-                .relatedDeptCode(null)
-                .inactive(false)
-                .build();
+                String result = ucsbSubjectsService.getJSON();
 
-        UCSBSubject us3 = UCSBSubject.builder()
-                .subjectCode("ARTHI")
-                .subjectTranslation("Art History")
-                .deptCode("ARTHI")
-                .collegeCode("L&S")
-                .relatedDeptCode(null)
-                .inactive(false)
-                .build();
-
-        List<UCSBSubject> expectedUSs = new ArrayList<>();
-        expectedUSs.addAll(Arrays.asList(us1, us2, us3));
-        
-        List<UCSBSubject> actualResult = ucsbSubjectsService.get();
-
-        assertEquals(expectedUSs, actualResult);
-    }
+                assertEquals(expectedResult, result);
+        }
 }
