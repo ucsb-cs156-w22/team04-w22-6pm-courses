@@ -5,13 +5,32 @@ import userEvent from "@testing-library/user-event";
 import CourseSearchForm from "main/components/CourseSearch/CourseSearchForm";
 
 describe("CourseSearchForm tests", () => {
+	const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.reset();
+    axiosMock.resetHistory();
+    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
 
 	test("renders without crashing", () => {
-		render(<CourseSearchForm />);
+		const queryClient = new QueryClient();
+		render(
+			<QueryClientProvider client={queryClient}>
+				<MemoryRouter>
+					<CourseSearchPage />
+				</MemoryRouter>
+			</QueryClientProvider>
+		);
 	});
 
 	test("when I select a level, the state for level changes", () => {
-		const { getByLabelText } = render(<CourseSearchForm />);
+		const queryClient = new QueryClient();
+		const { getByLabelText } = render(
+			<QueryClientProvider client={queryClient}>
+				<MemoryRouter>
+					<CourseSearchPage />
+				</MemoryRouter>
+			</QueryClientProvider>
+		);
 		const selectLevel = getByLabelText("Course Level");
 		userEvent.selectOptions(selectLevel, "G");
 
@@ -20,6 +39,7 @@ describe("CourseSearchForm tests", () => {
 	});
 
 	test("when I click submit, the right stuff happens", async () => {
+		const queryClient = new QueryClient();
 		const sampleReturnValue = {
 			sampleKey: "sampleValue",
 		};
@@ -36,10 +56,13 @@ describe("CourseSearchForm tests", () => {
 		fetchJSONSpy.mockResolvedValue(sampleReturnValue);
 
 		const { getByText, getByLabelText } = render(
-			<CourseSearchForm
-				setCourseJSON={setCourseJSONSpy}
-				fetchJSON={fetchJSONSpy}
-			/>
+			<QueryClientProvider client={queryClient}>
+				<MemoryRouter>
+					<CourseSearchForm
+					setCourseJSON={setCourseJSONSpy}
+					fetchJSON={fetchJSONSpy}/>
+				</MemoryRouter>
+			</QueryClientProvider>
 		);
 
 		const expectedFields = {

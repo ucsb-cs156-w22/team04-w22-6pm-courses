@@ -33,7 +33,7 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>            
-              <Route exact path="/coursesearch/search" element={<CourseSearchPage/>}/>
+              <Route exact path="/coursesearch/search" element={<CourseSearchPage />}/>
             </>
           )
         }
