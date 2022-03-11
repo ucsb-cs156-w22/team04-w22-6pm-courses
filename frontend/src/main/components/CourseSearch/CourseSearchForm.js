@@ -9,10 +9,7 @@ import { useBackend } from "main/utils/useBackend";
 import LevelSelector from "main/components/CourseSearch/LevelSelector.js"
 import SubjectSelector from "main/components/CourseSearch/SubjectSelector.js"
 
-import { useCurrentUser } from 'main/utils/currentUser'
-
 const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
-	const currentUser = useCurrentUser();
 
 	const levels = Object.values(allLevels);
 	//Stryker disable next-line all : this value is hard coded and shouldn't ever change

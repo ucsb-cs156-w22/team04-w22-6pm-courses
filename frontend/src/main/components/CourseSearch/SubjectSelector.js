@@ -10,7 +10,7 @@ const SubjectSelector = ({ subjects, setSubject, controlId, onChange = null, lab
         // Stryker disable next-line all: not sure how to text/mock local storage
         localSearchSubject || subjects[0].subjectCode
     );
-    
+
     const handleSubjectOnChange = (event) => {
         const selectedSubject = event.target.value;
         localStorage.setItem(controlId, selectedSubject);

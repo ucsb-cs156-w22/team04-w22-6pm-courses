@@ -4,6 +4,16 @@ import userEvent from "@testing-library/user-event";
 
 import CourseSearchForm from "main/components/CourseSearch/CourseSearchForm";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
+
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { allTheSubjects } from "fixtures/subjectFixtures.js"
+
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
+
 describe("CourseSearchForm tests", () => {
 	const axiosMock = new AxiosMockAdapter(axios);
     axiosMock.reset();
@@ -13,10 +23,11 @@ describe("CourseSearchForm tests", () => {
 
 	test("renders without crashing", () => {
 		const queryClient = new QueryClient();
+		axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
 		render(
 			<QueryClientProvider client={queryClient}>
 				<MemoryRouter>
-					<CourseSearchPage />
+					<CourseSearchForm />
 				</MemoryRouter>
 			</QueryClientProvider>
 		);
@@ -24,10 +35,11 @@ describe("CourseSearchForm tests", () => {
 
 	test("when I select a level, the state for level changes", () => {
 		const queryClient = new QueryClient();
+		axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
 		const { getByLabelText } = render(
 			<QueryClientProvider client={queryClient}>
 				<MemoryRouter>
-					<CourseSearchPage />
+					<CourseSearchForm />
 				</MemoryRouter>
 			</QueryClientProvider>
 		);
@@ -38,8 +50,24 @@ describe("CourseSearchForm tests", () => {
 		expect(localStorage.getItem("CourseSearch.CourseLevel")).toBe("G");
 	});
 
+	test("when I select a subject, the state for subject changes", () => {
+		const queryClient = new QueryClient();
+		axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
+		const { getByLabelText } = render(
+			<QueryClientProvider client={queryClient}>
+				<MemoryRouter>
+					<CourseSearchForm />
+				</MemoryRouter>
+			</QueryClientProvider>
+		);
+		const selectSubject = getByLabelText("Subject");
+		userEvent.selectOptions(selectSubject, "ANTH");
+		expect(selectSubject.value).toBe("ANTH");
+	});
+
 	test("when I click submit, the right stuff happens", async () => {
 		const queryClient = new QueryClient();
+		axiosMock.onGet("/api/UCSBSubjects/all").reply(200, allTheSubjects);
 		const sampleReturnValue = {
 			sampleKey: "sampleValue",
 		};
@@ -67,10 +95,14 @@ describe("CourseSearchForm tests", () => {
 
 		const expectedFields = {
 			level: "G",
+			subject: "ANTH"
 		};
 
 		const selectLevel = getByLabelText("Course Level");
 		userEvent.selectOptions(selectLevel, "G");
+
+		const selectSubject = getByLabelText("Subject");
+		userEvent.selectOptions(selectSubject, "ANTH");
 
 		const submitButton = getByText("Search");
 		userEvent.click(submitButton);
