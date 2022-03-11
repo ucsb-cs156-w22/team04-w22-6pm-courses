@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { allTheSubjects } from "fixtures/subjectFixtures.js"
 import { allLevels } from "main/utils/levelsUtils_NoStryker.js"
 import { quarterRange } from "main/utils/quarterUtilities"
 import SubjectSelector from "./SubjectSelector";
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 import SingleQuarterDropdown from "main/components/Quarters/SingleQuarterDropdown";
+import { toast } from "react-toastify";
 
 import { useBackend } from "main/utils/useBackend"
 
-const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
+const CourseSearchForm = ({ fetchJSON }) => {
 	const levels = Object.values(allLevels);
 	const quarters = quarterRange("20084", "20223");
 	//Stryker disable next-line all : this value is hard coded and shouldn't ever change
@@ -17,7 +17,7 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 	const localQuarter = localStorage.getItem("CourseSearch.Quarter");
 	const localSubject = localStorage.getItem("CourseSearch.Subject");
 
-	const firstDepartment = allTheSubjects[0].subjectCode;
+	const firstDepartment = "ART - Art";
 
 	//Stryker disable next-line all : these values aren't booleans and cannot become booleans
 	const [level, setLevel] = useState(localLevel || allLevels[0].levelShort);
@@ -28,7 +28,7 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 		"fetchSubjects",
 		"/api/UCSBSubjects/all",
 		{
-			initialData: allTheSubjects,
+			initialData: [],
 			revalidateOnMount: true,
 		}
 	);
@@ -36,14 +36,11 @@ const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		fetchJSON(event, { level, quarter, subject }).then((courseJSON) => {
-			/*
 			if (courseJSON.total === 0) {
-				addToast("There are no courses that match the requested criteria.", {
+				toast("There are no courses that match the requested criteria.", {
 					appearance: "error",
 				});
 			}
-			*/
-			setCourseJSON(courseJSON);
 		});
 	};
 
