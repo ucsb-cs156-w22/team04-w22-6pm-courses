@@ -46,6 +46,7 @@ describe("AppNavbar tests", () => {
         expect(aElement).toBeInTheDocument();
         aElement?.click();
         await waitFor( () => expect(getByTestId("appnavbar-loadSubjects")).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-adminpersonalschedules-list")).toBeInTheDocument() );
     });
 
     
