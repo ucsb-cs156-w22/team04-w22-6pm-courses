@@ -146,4 +146,5 @@ describe("UserTable tests", () => {
     
     fireEvent.click(deleteButton);
   }); 
+  
 });
