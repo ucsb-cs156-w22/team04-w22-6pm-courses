@@ -41,11 +41,13 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
+
             <Nav className="mr-auto">
               {
-                hasRole(currentUser, "ROLE_ADMIN") && (
-                  <NavDropdown title="Admin" id="appnavbar-admin-dropdown" data-testid="appnavbar-admin-dropdown" >
-                    <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="PersonalSchedules" id="appnavbar-personalschedules-dropdown" data-testid="appnavbar-personalschedules-dropdown" >
+                    <NavDropdown.Item href="/personalschedules/list" data-testid="appnavbar-personalschedules-list">List</NavDropdown.Item>
+                    <NavDropdown.Item href="/personalschedules/create" data-testid="appnavbar-personalschedules-create">Create</NavDropdown.Item>
                   </NavDropdown>
                 )
               }
@@ -53,9 +55,20 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
 
             <Nav className="mr-auto">
               {
-              (
-                <NavDropdown title="Courses" id="appnavbar-courses-dropdown" data-testid="appnavbad-courses-dropdown" >
-                  <NavDropdown.Item href="/coursesearch/search">Course Search</NavDropdown.Item>
+                hasRole(currentUser, "ROLE_ADMIN") && (
+                  <NavDropdown title="Admin" id="appnavbar-admin-dropdown" data-testid="appnavbar-admin-dropdown" >
+                    <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
+                    <NavDropdown.Item href="/admin/loadSubjects" data-testid="appnavbar-loadSubjects">Load Subjects</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+            </Nav>
+
+            <Nav className="mr-auto">
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                <NavDropdown title="Courses" id="appnavbar-courses-dropdown" data-testid="appnavbar-courses-dropdown" >
+                  <NavDropdown.Item href="/coursesearch/search" data-testid="appnavbar-courses-search">Course Search</NavDropdown.Item>
                 </NavDropdown>
               )
               }
@@ -73,7 +86,6 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
-
           </Navbar.Collapse>
         </Container >
       </Navbar >

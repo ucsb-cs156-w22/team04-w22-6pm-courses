@@ -1,57 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { allTheSubjects } from "fixtures/subjectFixtures.js"
-import { quarterRange } from "main/utils/quarterUtils.js"
+import { allLevels } from "main/utils/levelsUtils_NoStryker.js"
 import LevelSelector from "main/components/CourseSearch/LevelSelector";
 
-const BasicCourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
-	const quarters = quarterRange("20221", "20222");
-	const levels = [["L","Undergrad - Lower"], 
-					["S","Undergrad - Upper Division"], 
-					["U","Undergrad - All"], 
-					["G","Graduate"]];
+const CourseSearchForm = ({ setCourseJSON, fetchJSON }) => {
+	const levels = Object.values(allLevels);
+	//Stryker disable next-line all : this value is hard coded and shouldn't ever change
+	const localLevel = localStorage.getItem("CourseSearch.CourseLevel");
 
-    const localSubject = localStorage.getItem("BasicSearch.Subject");
-    const localQuarter = localStorage.getItem("BasicSearch.Quarter");
-	const localLevel = localStorage.getItem("BasicSearch.CourseLevel");
-	
-	const firstDepartment = allTheSubjects[0].subjectCode;
-	const [quarter, setQuarter] = useState(localQuarter || quarters[0].yyyyq);
-	const [subject, setSubject] = useState(localSubject || firstDepartment);
-    const [level, setLevel] = useState(localLevel || "U");
+	//Stryker disable next-line all : these values aren't booleans and cannot become booleans
+	const [level, setLevel] = useState(localLevel || allLevels[0].levelShort);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		fetchJSON(event, { quarter, subject, level }).then((courseJSON) => {
-			if (courseJSON.total === 0) {
-			}
+		fetchJSON(event, { level }).then((courseJSON) => {
 			setCourseJSON(courseJSON);
 		});
 	};
 
+	//Stryker disable next-line all : handleLevelOnChange is passed into the levelSelector as setLevel which tests if setLevel gets called properly
 	const handleLevelOnChange = (level) => {
-        localStorage.setItem("BasicSearch.CourseLevel", level);
+		//Stryker disable next-line StringLiteral : key value is hard coded
+		localStorage.setItem("CourseSearch.CourseLevel", level);
 		setLevel(level);
 	};
 
 	return (
 		<Form onSubmit={handleSubmit}>
-			<Container>
-				<Row>
-					<Col md = "auto"><LevelSelector
-						levels={levels}
-						level={level}
-						setLevel={handleLevelOnChange}
-						controlId={"BasicSearch.CourseLevel"}
-						label={"Course Level"}
-					/></Col>
-				</Row>
-			</Container>
-			<Button variant="primary" type="submit">
-				Submit
-			</Button>
+			<Form.Group as={Row}>
+				<Col sm="auto">
+				<LevelSelector
+					levels={levels}
+					level={level}
+					setLevel={handleLevelOnChange}
+					controlId={"CourseSearch.CourseLevel"}
+					label={"Course Level"}
+				/></Col>
+			</Form.Group>
+			<Form.Group as={Row}>
+				<Col sm="auto">
+					<Button type="submit">Search</Button>
+				</Col>
+			</Form.Group>
 		</Form>
 	);
 };
 
-export default BasicCourseSearchForm;
+export default CourseSearchForm;
