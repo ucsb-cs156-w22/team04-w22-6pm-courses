@@ -9,22 +9,23 @@ const columns = [
     {
         Header: 'User',
         accessor: 'user',
-      },
-      {
+    },
+    {
         Header: 'Name',
         accessor: 'name',
-      },
-      {
+    },
+    {
         Header: 'Description',
         accessor: 'description',
-      },
-      {
+    },
+    {
         Header: 'Quarter',
         accessor: 'quarter',
-      },
+    },
 ];
 
 export default function PersonalScheduleTable({ personalSchedule }) {
+    
     return <OurTable
         data={personalSchedule}
         columns={columns}
