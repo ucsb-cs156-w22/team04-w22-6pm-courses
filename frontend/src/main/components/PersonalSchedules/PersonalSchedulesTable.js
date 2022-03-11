@@ -1,9 +1,24 @@
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
-import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/PersonalScheduleUtils"
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
+import { toast } from "react-toastify";
+
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/personalschedules",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
 
 export default function PersonalSchedulesTable({  personalSchedules, currentUser }) {
 
