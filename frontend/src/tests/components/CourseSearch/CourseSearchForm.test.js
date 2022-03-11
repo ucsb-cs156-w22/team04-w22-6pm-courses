@@ -37,13 +37,14 @@ describe("CourseSearchForm tests", () => {
 
 		const { getByText, getByLabelText } = render(
 			<CourseSearchForm
-				setCourseJSON={setCourseJSONSpy}
 				fetchJSON={fetchJSONSpy}
 			/>
 		);
 
 		const expectedFields = {
 			level: "G",
+			quarter: "20084",
+			subject: "ART - Art",
 		};
 
 		const selectLevel = getByLabelText("Course Level");
@@ -54,11 +55,9 @@ describe("CourseSearchForm tests", () => {
 
 		// we need to be careful not to assert this expectation
 		// until all of the async promises are resolved
-		await waitFor(() => expect(setCourseJSONSpy).toHaveBeenCalledTimes(1));
 		await waitFor(() => expect(fetchJSONSpy).toHaveBeenCalledTimes(1));
 
 		// assert that ourSpy was called with the right value
-		expect(setCourseJSONSpy).toHaveBeenCalledWith(sampleReturnValue);
 		expect(fetchJSONSpy).toHaveBeenCalledWith(
 			expect.any(Object),
 			expectedFields
