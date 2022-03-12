@@ -1,4 +1,4 @@
-import { render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import AdminPersonalSchedulesIndexPage from "main/pages/AdminPersonalSchedules/AdminPersonalSchedulesIndexPage";
@@ -53,7 +53,7 @@ describe("AdminPersonalSchedulesIndexPage tests", () => {
 
 
 
-    test("renders three dates without crashing for admin user", async () => {
+    test("renders three personalschedules without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/personalschedules/admin/all").reply(200, adminPersonalSchedulesFixtures.threePersonalSchedules);
@@ -69,6 +69,38 @@ describe("AdminPersonalSchedulesIndexPage tests", () => {
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
         expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+
+    });
+
+
+
+    test("test what happens when you click delete, admin", async () => {
+        setupAdminUser();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/personalschedules/admin/all").reply(200, adminPersonalSchedulesFixtures.threePersonalSchedules);
+        axiosMock.onDelete("/api/personalschedules/admin").reply(200, "PersonalSchedule with id 1 was deleted");
+
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AdminPersonalSchedulesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+
+       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
+
+
+        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).toBeInTheDocument();
+       
+        fireEvent.click(deleteButton);
+
+        await waitFor(() => { expect(mockToast).toBeCalledWith("PersonalSchedule with id 1 was deleted") });
 
     });
 
