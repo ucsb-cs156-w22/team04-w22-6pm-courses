@@ -49,7 +49,7 @@ const CourseSearchPage = () => {
                 subjectCode: subject.split(" -")[0],
                 objLevelCode: level
             }
-        }).then(e => e.data.classes).catch(e => {})
+        }).then(e => e.data.classes)
         setCourses(response);
     };
 
@@ -61,7 +61,7 @@ const CourseSearchPage = () => {
 
             <TableLegend legend />
             <CourseFilters cancelled={cancelled} handleCancelledOnChange={handleCancelledOnChange} closed={closed} handleClosedOnChange={handleClosedOnChange} full={full} handleFullOnChange={handleFullOnChange}/>
-            { returned_courses.length !== 0 ? <CoursesTable courses={returned_courses}/> : null }
+            <CoursesTable courses={returned_courses}/> 
         </BasicLayout>
     );
 };
