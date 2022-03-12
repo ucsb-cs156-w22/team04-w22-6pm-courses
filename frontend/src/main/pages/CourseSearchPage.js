@@ -7,7 +7,6 @@ const CourseSearchPage = () => {
     return (
         <BasicLayout>
             <h2>Course Search</h2>
-            <CourseSearchForm fetchJSON={function fetchCourses(){}}/>
         </BasicLayout>
     );
 };
