@@ -60,6 +60,19 @@ public class UCSBSubjectsControllerTests extends ControllerTestCase {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void api_UCSBSubjects_raw__logged_out__returns_403() throws Exception {
+        mockMvc.perform(get("/api/UCSBSubjects/raw"))
+                .andExpect(status().is(403));
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_UCSBSubjects_raw__user_logged_in__returns_200() throws Exception {
+        mockMvc.perform(get("/api/UCSBSubjects/raw"))
+                .andExpect(status().isOk());
+    }
+
     // Tests with mocks for database actions
 
     @WithMockUser(roles = { "USER" })
@@ -344,6 +357,23 @@ public class UCSBSubjectsControllerTests extends ControllerTestCase {
         String expectedJson = mapper.writeValueAsString(expectedSavedUSs);
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void api_raw_test() throws Exception {
+
+        String expectedResult = "{expectedResult}";
+
+        when(ucsbSubjectsService.getJSON()).thenReturn(expectedResult);
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/UCSBSubjects/raw"))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedResult, responseString);
     }
 
 }
