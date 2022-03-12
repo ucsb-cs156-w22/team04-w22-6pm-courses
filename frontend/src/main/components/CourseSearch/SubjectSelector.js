@@ -8,7 +8,7 @@ const SubjectSelector = ({ subjects, setSubject, controlId, onChange = null, lab
 
     const [subjectState, setSubjectState] = useState(
         // Stryker disable next-line all: not sure how to text/mock local storage
-        localSearchSubject || subjects[0].subjectCode
+        localSearchSubject || subjects[0]?.subjectCode
     );
 
     const handleSubjectOnChange = (event) => {
@@ -22,7 +22,7 @@ const SubjectSelector = ({ subjects, setSubject, controlId, onChange = null, lab
     };
 
     // Stryker disable next-line all : empty key mutation
-    subjects.sort(compareValues("subjectCode"));
+    subjects.sort?.(compareValues("subjectCode"));
 
     return (
         <Form.Group controlId={controlId}>
@@ -32,7 +32,7 @@ const SubjectSelector = ({ subjects, setSubject, controlId, onChange = null, lab
                 value={subjectState} 
                 onChange={handleSubjectOnChange} 
             >
-                {subjects.map(function (object, i) {
+                {subjects.map?.(function (object, i) {
                     const key=`${controlId}-option-${i}`;
                     return (
                         <option 
