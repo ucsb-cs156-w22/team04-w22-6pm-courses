@@ -45,8 +45,9 @@ describe("AppNavbar tests", () => {
         const aElement = dropdown.querySelector("a");
         expect(aElement).toBeInTheDocument();
         aElement?.click();
-        await waitFor( () => expect(getByTestId("appnavbar-loadSubjects")).toBeInTheDocument() );
-        await waitFor( () => expect(getByTestId("appnavbar-adminpersonalschedules-list")).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-admin-users")).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-admin-loadsubjects")).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-admin-personalschedules")).toBeInTheDocument() );
     });
 
     
