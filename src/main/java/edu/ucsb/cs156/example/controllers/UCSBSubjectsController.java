@@ -48,6 +48,13 @@ public class UCSBSubjectsController extends ApiController {
         return subjects;
     }
 
+    @ApiOperation(value = "Get all UCSB Subjects from the UCSB API")
+    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')")
+    @GetMapping("/raw")
+    public String rawSubjects() {
+        return ucsbSubjectsService.getJSON();
+    }
+
     @ApiOperation(value = "Load subjects into database from UCSB API")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/load")
