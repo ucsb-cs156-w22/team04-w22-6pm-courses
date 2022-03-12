@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
+import AdminLoadSubjectsPage from "main/pages/AdminLoadSubjectsPage";
 import PersonalSchedulesIndexPage from "main/pages/PersonalSchedules/PersonalSchedulesIndexPage";
 import PersonalSchedulesCreatePage from "main/pages/PersonalSchedules/PersonalSchedulesCreatePage";
 import AdminPersonalSchedulesIndexPage from "main/pages/AdminPersonalSchedules/AdminPersonalSchedulesIndexPage";
@@ -23,6 +24,11 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
+
+            <Route exact path="/admin/users" element={<AdminUsersPage />} />
+            <Route exact path="/admin/loadSubjects" element={<AdminLoadSubjectsPage />} />
+            </>
+            
               <Route exact path="/admin/users" element={<AdminUsersPage />} />
               <Route exact path="/admin/personalschedules/list" element={<AdminPersonalSchedulesIndexPage />} />
 
